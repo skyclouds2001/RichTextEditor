@@ -162,7 +162,8 @@ class Editor {
 
     this.#init()
 
-    this.#render()
+    this.#measureLine()
+    this.#renderPage()
   }
 
   /**
@@ -210,7 +211,8 @@ class Editor {
    */
   reset() {
     this.destroy()
-    this.#render()
+    this.#measureLine()
+    this.#renderPage()
   }
 
   /**
@@ -648,14 +650,6 @@ class Editor {
 
       renderHeight += line.lineHeight
     })
-  }
-
-  /**
-   * 渲染控制主方法
-   */
-  #render() {
-    this.#measureLine()
-    this.#renderPage()
   }
 
   /**
