@@ -339,14 +339,14 @@ class Editor {
     const [x, y, page] = this.#transformWindowPositionToCanvasPosition(e.pageX, e.pageY)
 
     if (!page) {
-      this.#cursor.hidden = true
+      this.blur()
       return
     }
 
     const [,, word, mode] = this.#getWordPositionFromCanvasPosition(x, y, page)
 
     if(!word || !mode) {
-      this.#cursor.hidden = true
+      this.blur()
       return
     }
 
@@ -715,11 +715,25 @@ class Editor {
    * 移动光标
    */
   #moveCursor(pos: Record<'top' | 'left' | 'width' | 'height', number>) {
-    this.#cursor.hidden = false
+    this.focus()
 
     this.#cursor.style.top = this.#transformPixelNumberToString(pos.top)
     this.#cursor.style.left = this.#transformPixelNumberToString(pos.left)
     this.#cursor.style.width = this.#transformPixelNumberToString(pos.width)
     this.#cursor.style.height = this.#transformPixelNumberToString(pos.height)
+  }
+
+  /**
+   * 聚焦方法
+   */
+  focus() {
+    this.#cursor.hidden = false
+  }
+
+  /**
+   * 失焦方法
+   */
+  blur() {
+    this.#cursor.hidden = true
   }
 }
