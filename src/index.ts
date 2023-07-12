@@ -299,27 +299,6 @@ class Editor {
   }
 
   /**
-   * 生成字体字符串方法
-   */
-  #generateFontString({
-    fontStyle = 'normal',
-    fontVariant = 'normal',
-    fontWeight = 'normal',
-    fontStretch = 'normal',
-    fontSize,
-    fontFamily,
-  }: {
-    fontStyle?: string
-    fontVariant?: string
-    fontWeight?: string
-    fontStretch?: string
-    fontSize: number
-    fontFamily: string
-  }): string {
-    return `${fontStyle} ${fontVariant} ${fontWeight} ${fontStretch} ${this.#transformPixelNumberToString(fontSize)} ${fontFamily}`.trim()
-  }
-
-  /**
    * 初始化方法
    */
   #init() {
@@ -418,6 +397,27 @@ class Editor {
       context.stroke()
       context.restore()
     }
+  }
+
+  /**
+   * 生成字体字符串方法
+   */
+  #generateFontString({
+    fontStyle = 'normal',
+    fontVariant = 'normal',
+    fontWeight = 'normal',
+    fontStretch = 'normal',
+    fontSize,
+    fontFamily,
+  }: {
+    fontStyle?: string
+    fontVariant?: string
+    fontWeight?: string
+    fontStretch?: string
+    fontSize: number
+    fontFamily: string
+  }): string {
+    return `${fontStyle} ${fontVariant} ${fontWeight} ${fontStretch} ${this.#transformPixelNumberToString(fontSize)} ${fontFamily}`.trim()
   }
 
   /**
