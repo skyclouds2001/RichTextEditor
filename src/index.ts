@@ -350,7 +350,9 @@ class Editor {
       return
     }
 
-    const pos = this.#generateCursorInfo(word, page)
+    const type = mode === 'word' && x < word.pos!.left + word.info!.width / 2 ? 'pre' : 'aft'
+
+    const pos = this.#generateCursorInfo(word, page, type)
 
     this.#moveCursor(pos)
   }
@@ -693,13 +695,13 @@ class Editor {
    * @param word 字位置
    * @returns 光标信息
    */
-  #generateCursorInfo(word: Word, page: HTMLCanvasElement): Record<'top' | 'left' | 'width' | 'height', number> {
+  #generateCursorInfo(word: Word, page: HTMLCanvasElement, type: 'pre' | 'aft'): Record<'top' | 'left' | 'width' | 'height', number> {
     const { fontSize } = this.options
 
     const width = 1
     const height = Math.max(word.info!.height, fontSize) * 1.5
 
-    const [left, top] = this.#transformCanvasPositionToWindowPosition(word.pos!.right, word.pos!.top - height / 6, page)
+    const [left, top] = this.#transformCanvasPositionToWindowPosition(type === 'pre' ? word.pos!.left : word.pos!.right, word.pos!.top - height / 6, page)
 
     return {
       top,
