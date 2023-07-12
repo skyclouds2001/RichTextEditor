@@ -16,6 +16,12 @@ interface EditorOptions {
   fontFamily: string
   lineHeight: number
 
+  cursorWidth: number
+  cursorHeight: number
+  cursorColor: string
+  cursorZIndex: number
+  cursorAnimationDuration: number
+
   referenceLine: boolean
 }
 
@@ -102,6 +108,12 @@ class Editor {
     fontSize: 16,
     fontFamily: 'fangsong system-ui',
     lineHeight: 1.5,
+
+    cursorWidth: 1,
+    cursorHeight: 16,
+    cursorColor: '#000',
+    cursorZIndex: 9999,
+    cursorAnimationDuration: 1000,
 
     referenceLine: false,
   }
@@ -649,6 +661,8 @@ class Editor {
    * @returns 光标
    */
   #initCursor(): HTMLDivElement {
+    const { cursorColor, cursorWidth, cursorHeight, cursorZIndex, cursorAnimationDuration } = this.options
+
     const cursor = document.createElement('div')
 
     cursor.hidden = true
@@ -656,16 +670,16 @@ class Editor {
     cursor.style.position = 'absolute'
     cursor.style.left = '0'
     cursor.style.top = '0'
-    cursor.style.width = '1px'
-    cursor.style.height = '16px'
-    cursor.style.backgroundColor = '#000'
-    cursor.style.zIndex = '9999'
+    cursor.style.width = this.#transformPixelNumberToString(cursorWidth)
+    cursor.style.height = this.#transformPixelNumberToString(cursorHeight * 1.5)
+    cursor.style.backgroundColor = cursorColor
+    cursor.style.zIndex = cursorZIndex.toString()
 
     cursor.animate({
       opacity: [0, 0, 1, 1],
       offset: [0, 0.5, 0.5, 1],
     }, {
-      duration: 1000,
+      duration: cursorAnimationDuration,
       iterations: Infinity,
     })
 
