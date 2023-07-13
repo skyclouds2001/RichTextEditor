@@ -251,7 +251,7 @@ class Editor {
       }
     }
     // 其他
-    return [x, y, null]
+    return [0, 0, null]
   }
 
   /**
@@ -264,81 +264,6 @@ class Editor {
   #transformCanvasPositionToWindowPosition(x: number, y: number, instance: HTMLCanvasElement): [x: number, y: number] {
     const { offsetLeft, offsetTop } = instance
     return [x + offsetLeft, y + offsetTop]
-  }
-
-  /**
-   * 从canvas数据获取字
-   * @param x 相对canvas的x坐标
-   * @param y 相对canvas的y坐标
-   * @param canvas 当前canvas下标
-   * @returns 字
-   */
-  #getWordPositionFromCanvasPosition(x: number, y: number, canvas: HTMLCanvasElement): [x: number, y: number, word: Word | null, type?: 'word' | 'line' | 'page'] {
-    const { pageHeight, pagePadding, pageWidth } = this.options
-
-    // 点击点在某一字之内 
-    for(const word of this.#words) {
-      if (this.#pages[word!.pos!.page].canvas === canvas && word!.pos!.left <= x && x <= word!.pos!.right && word!.pos!.top <= y && y <= word!.pos!.bottom) {
-        return [x - word!.pos!.left, y - word!.pos!.right, word, 'word']
-      }
-    }
-
-    // 点击点在某一行之内
-    for (const line of this.#lines) {
-      if (this.#pages[line!.pos!.page].canvas === canvas && line.pos!.top <= y && line.pos!.bottom >= y && pagePadding[3] <= x && x <= pageWidth - pagePadding[1]) {
-        // 默认取该行最后一个元素，若为最后一行且空行时无法取到值则赋默认值
-        const word = line.elements.at(-1) ?? {
-          value: '',
-          pos: {
-            left: pagePadding[3],
-            right: pagePadding[3] + 0,
-            top: line.pos!.top,
-            bottom: line.pos!.top + line.height,
-            page: line!.pos!.page,
-          },
-          info: {
-            width: 0,
-            height: 0,
-            ascent: 0,
-            descent: 0,
-            font: '',
-          },
-        } satisfies Word
-
-        return [0, 0, word, 'line']
-      }
-    }
-
-    // 点击点在某页编辑区域之内
-    for (const page of this.#pages) {
-      if (page.canvas === canvas && pagePadding[0] <= y && y <= pageHeight - pagePadding[2] && pagePadding[3] <= x && x <= pageWidth - pagePadding[1]) {
-
-        const line = page.lines.at(-1)!
-
-        // 同上
-        const word = line.elements.at(-1) ?? {
-          value: '',
-          pos: {
-            left: pagePadding[3],
-            right: pagePadding[3] + 0,
-            top: line.pos!.top,
-            bottom: line.pos!.top + line.height,
-            page: line!.pos!.page,
-          },
-          info: {
-            width: 0,
-            height: 0,
-            ascent: 0,
-            descent: 0,
-            font: '',
-          },
-        } satisfies Word
-
-        return [0, 0, word, 'page']
-      }
-    }
-    // 其他
-    return [0, 0, null]
   }
 
   /**
@@ -463,6 +388,81 @@ class Editor {
     fontFamily: string
   }): string {
     return `${fontStyle} ${fontVariant} ${fontWeight} ${fontStretch} ${this.#transformPixelNumberToString(fontSize)} ${fontFamily}`.trim()
+  }
+
+  /**
+   * 从canvas数据获取字
+   * @param x 相对canvas的x坐标
+   * @param y 相对canvas的y坐标
+   * @param canvas 当前canvas下标
+   * @returns 字
+   */
+  #getWordPositionFromCanvasPosition(x: number, y: number, canvas: HTMLCanvasElement): [x: number, y: number, word: Word | null, type?: 'word' | 'line' | 'page'] {
+    const { pageHeight, pagePadding, pageWidth } = this.options
+
+    // 点击点在某一字之内 
+    for(const word of this.#words) {
+      if (this.#pages[word!.pos!.page].canvas === canvas && word!.pos!.left <= x && x <= word!.pos!.right && word!.pos!.top <= y && y <= word!.pos!.bottom) {
+        return [x - word!.pos!.left, y - word!.pos!.right, word, 'word']
+      }
+    }
+
+    // 点击点在某一行之内
+    for (const line of this.#lines) {
+      if (this.#pages[line!.pos!.page].canvas === canvas && line.pos!.top <= y && line.pos!.bottom >= y && pagePadding[3] <= x && x <= pageWidth - pagePadding[1]) {
+        // 默认取该行最后一个元素，若为最后一行且空行时无法取到值则赋默认值
+        const word = line.elements.at(-1) ?? {
+          value: '',
+          pos: {
+            left: pagePadding[3],
+            right: pagePadding[3] + 0,
+            top: line.pos!.top,
+            bottom: line.pos!.top + line.height,
+            page: line!.pos!.page,
+          },
+          info: {
+            width: 0,
+            height: 0,
+            ascent: 0,
+            descent: 0,
+            font: '',
+          },
+        } satisfies Word
+
+        return [0, 0, word, 'line']
+      }
+    }
+
+    // 点击点在某页编辑区域之内
+    for (const page of this.#pages) {
+      if (page.canvas === canvas && pagePadding[0] <= y && y <= pageHeight - pagePadding[2] && pagePadding[3] <= x && x <= pageWidth - pagePadding[1]) {
+
+        const line = page.lines.at(-1)!
+
+        // 同上
+        const word = line.elements.at(-1) ?? {
+          value: '',
+          pos: {
+            left: pagePadding[3],
+            right: pagePadding[3] + 0,
+            top: line.pos!.top,
+            bottom: line.pos!.top + line.height,
+            page: line!.pos!.page,
+          },
+          info: {
+            width: 0,
+            height: 0,
+            ascent: 0,
+            descent: 0,
+            font: '',
+          },
+        } satisfies Word
+
+        return [0, 0, word, 'page']
+      }
+    }
+    // 其他
+    return [0, 0, null]
   }
 
   /**
