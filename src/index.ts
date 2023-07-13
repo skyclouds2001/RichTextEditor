@@ -443,8 +443,8 @@ class Editor {
     const { width, actualBoundingBoxAscent, actualBoundingBoxDescent } = Editor.#offscreenCanvasRenderingContext.measureText(word.value)
 
     return {
-      width,
-      height: actualBoundingBoxAscent + actualBoundingBoxDescent,
+      width: word.value === '\n' ? 0 : width,
+      height: word.value === '\n' ? fontSize : actualBoundingBoxAscent + actualBoundingBoxDescent,
       ascent: actualBoundingBoxAscent,
       descent: actualBoundingBoxDescent,
       font,
@@ -542,7 +542,7 @@ class Editor {
 
     let renderWidth = 0
 
-    line.elements.forEach((word, i) => {
+    line.elements.forEach((word) => {
       if (word.style?.bgColor || word.style?.backgroundColor) {
         context.save()
         context.beginPath()
