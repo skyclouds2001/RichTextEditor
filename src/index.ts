@@ -286,14 +286,55 @@ class Editor {
     // 点击点在某一行之内
     for (const line of this.#lines) {
       if (this.#pages[line!.pos!.page].canvas === canvas && line.pos!.top <= y && line.pos!.bottom >= y && pagePadding[3] <= x && x <= pageWidth - pagePadding[1]) {
-        return [0, 0, line.elements.at(-1)!, 'line']
+        // 默认取该行最后一个元素，若为最后一行且空行时无法取到值则赋默认值
+        const word = line.elements.at(-1) ?? {
+          value: '',
+          pos: {
+            left: pagePadding[3],
+            right: pagePadding[3] + 0,
+            top: line.pos!.top,
+            bottom: line.pos!.top + line.height,
+            page: line!.pos!.page,
+          },
+          info: {
+            width: 0,
+            height: 0,
+            ascent: 0,
+            descent: 0,
+            font: '',
+          },
+        } satisfies Word
+
+        return [0, 0, word, 'line']
       }
     }
 
     // 点击点在某页编辑区域之内
     for (const page of this.#pages) {
       if (page.canvas === canvas && pagePadding[0] <= y && y <= pageHeight - pagePadding[2] && pagePadding[3] <= x && x <= pageWidth - pagePadding[1]) {
-        return [0, 0, page.lines.at(-1)!.elements.at(-1)!, 'page']
+
+        const line = page.lines.at(-1)!
+
+        // 同上
+        const word = line.elements.at(-1) ?? {
+          value: '',
+          pos: {
+            left: pagePadding[3],
+            right: pagePadding[3] + 0,
+            top: line.pos!.top,
+            bottom: line.pos!.top + line.height,
+            page: line!.pos!.page,
+          },
+          info: {
+            width: 0,
+            height: 0,
+            ascent: 0,
+            descent: 0,
+            font: '',
+          },
+        } satisfies Word
+
+        return [0, 0, word, 'page']
       }
     }
     // 其他
@@ -695,7 +736,7 @@ class Editor {
     const width = 1
     const height = Math.max(word.info!.height, fontSize) * 1.5
 
-    const [left, top] = this.#transformCanvasPositionToWindowPosition(type === 'pre' ? word.pos!.left : word.pos!.right, word.pos!.top - height / 6, page)
+    const [left, top] = this.#transformCanvasPositionToWindowPosition(type === 'pre' ? word.pos!.left : word.pos!.right, word.pos!.top - (word.value === '' ? 0 : height / 6), page)
 
     return {
       top,
