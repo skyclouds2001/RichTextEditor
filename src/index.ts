@@ -455,21 +455,21 @@ class Editor {
    * 计算字组信息
    */
   #measureLine() {
-    const { lineHeight, pageWidth, pagePadding } = this.options
+    const { fontSize, lineHeight, pageWidth, pagePadding } = this.options
 
     const contentWidth = pageWidth - pagePadding[1] - pagePadding[3]
 
     this.#lines.push({
       width: 0,
-      height: 0,
-      lineHeight: 0,
+      height: fontSize,
+      lineHeight: fontSize * lineHeight,
       ascent: 0,
       descent: 0,
       elements: [],
     })
 
     this.#words.forEach((word) => {
-      const info = this.#measureWord(word) satisfies WordInfo
+      const info = this.#measureWord(word)
       word.info = info
 
       const line = this.#lines.at(-1)!
@@ -477,8 +477,8 @@ class Editor {
       if (info.width + line.width > contentWidth || word.value === '\n') {
         this.#lines.push({
           width: 0,
-          height: 0,
-          lineHeight: 0,
+          height: fontSize,
+          lineHeight: fontSize * lineHeight,
           ascent: 0,
           descent: 0,
           elements: [],
