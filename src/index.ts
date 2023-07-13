@@ -711,6 +711,8 @@ class Editor {
     cursor.style.height = this.#transformPixelNumberToString(cursorHeight * 1.5)
     cursor.style.backgroundColor = cursorColor
     cursor.style.zIndex = cursorZIndex.toString()
+    cursor.style.translate = 'none'
+    cursor.style.willChange = 'translate'
 
     cursor.animate({
       opacity: [0, 0, 1, 1],
@@ -752,8 +754,7 @@ class Editor {
   #moveCursor(pos: Record<'top' | 'left' | 'width' | 'height', number>) {
     this.focus()
 
-    this.#cursor.style.top = this.#transformPixelNumberToString(pos.top)
-    this.#cursor.style.left = this.#transformPixelNumberToString(pos.left)
+    this.#cursor.style.translate = `${this.#transformPixelNumberToString(pos.left)} ${this.#transformPixelNumberToString(pos.top)}`
     this.#cursor.style.width = this.#transformPixelNumberToString(pos.width)
     this.#cursor.style.height = this.#transformPixelNumberToString(pos.height)
   }
