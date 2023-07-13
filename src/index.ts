@@ -159,6 +159,7 @@ class Editor {
     this.#words = Object.assign(words)
     this.#contexts = new WeakMap()
     this.#cursor = this.#initCursor()
+    this.#textarea = this.#initTextarea()
 
     this.#init()
 
@@ -205,6 +206,11 @@ class Editor {
    * 编辑器光标实例
    */
   readonly #cursor: HTMLDivElement
+
+  /**
+   * 编辑器输入器实例
+   */
+  readonly #textarea: HTMLTextAreaElement
 
   /**
    * 重设编辑器方法
@@ -287,7 +293,9 @@ class Editor {
     this.container.style.left = '0'
     this.container.style.right = '0'
 
-    window.addEventListener('mousedown', this.#onMouseDown.bind(this))
+    window.addEventListener('mousedown', this.#onMouseDown.bind(this), {
+      passive: true,
+    })
   }
 
   /**
@@ -698,10 +706,10 @@ class Editor {
     cursor.style.position = 'absolute'
     cursor.style.left = '0'
     cursor.style.top = '0'
+    cursor.style.zIndex = cursorZIndex.toString()
     cursor.style.width = `${cursorWidth}px`
     cursor.style.height = `${cursorHeight * 1.5}px`
     cursor.style.backgroundColor = cursorColor
-    cursor.style.zIndex = cursorZIndex.toString()
     cursor.style.translate = 'none'
     cursor.style.willChange = 'translate'
 
@@ -743,11 +751,34 @@ class Editor {
    * 移动光标
    */
   #moveCursor(pos: Record<'top' | 'left' | 'width' | 'height', number>) {
-    this.focus()
-
     this.#cursor.style.translate = `${pos.left}px ${pos.top}px`
     this.#cursor.style.width = `${pos.width}px`
     this.#cursor.style.height = `${pos.height}px`
+
+    setTimeout(this.focus.bind(this), 0)
+  }
+
+  /**
+   * 初始化文本框实例方法
+   * @returns 文本框
+   */
+  #initTextarea() {
+    const textarea = document.createElement('textarea')
+
+    textarea.style.position = 'fixed'
+    textarea.style.left = '0'
+    textarea.style.top = '0'
+    textarea.style.zIndex = '-9999'
+    textarea.style.width = '1px'
+    textarea.style.height = '1px'
+    textarea.style.translate = 'none'
+    textarea.style.willChange = 'translate'
+
+    textarea.addEventListener('input', console.log)
+
+    this.container.appendChild(textarea)
+
+    return textarea
   }
 
   /**
@@ -755,6 +786,7 @@ class Editor {
    */
   focus() {
     this.#cursor.hidden = false
+    this.#textarea.focus()
   }
 
   /**
@@ -762,5 +794,6 @@ class Editor {
    */
   blur() {
     this.#cursor.hidden = true
+    this.#textarea.blur()
   }
 }
