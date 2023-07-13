@@ -228,15 +228,6 @@ class Editor {
   }
 
   /**
-   * 转换像素数值至像素字符串方法
-   * @param pixel 像素数值
-   * @returns 像素字符串
-   */
-  #transformPixelNumberToString(pixel: number): string {
-    return `${pixel}px`
-  }
-
-  /**
    * 将全局下鼠标位置转换为确定的页面实例及相对其的坐标
    * @param x 全局鼠标x位置
    * @param y 全局鼠标y位置
@@ -336,15 +327,15 @@ class Editor {
     canvas.id = `page-${this.id}-${this.#pages.length}`
     canvas.width = pageWidth
     canvas.height = pageHeight
-    canvas.style.width = this.#transformPixelNumberToString(pageWidth)
-    canvas.style.height = this.#transformPixelNumberToString(pageHeight)
-    canvas.style.margin = pageMargin.map(this.#transformPixelNumberToString).join(' ')
-    canvas.style.padding = pagePadding.map(() => 0).map(this.#transformPixelNumberToString).join(' ')
+    canvas.style.width = `${pageWidth}px`
+    canvas.style.height = `${pageHeight}px`
+    canvas.style.margin = pageMargin.map((v) => `${v}px`).join(' ')
+    canvas.style.padding = '0'
     canvas.style.boxSizing = 'border-box'
     canvas.style.backgroundColor = pageBackgroundColor
     canvas.style.border = pageBorder
     canvas.style.boxShadow = pageBoxShadow
-    canvas.style.borderRadius = this.#transformPixelNumberToString(pageBorderRadius)
+    canvas.style.borderRadius = `${pageBorderRadius}px`
 
     this.container.appendChild(canvas)
     this.#pages.push({
@@ -387,7 +378,7 @@ class Editor {
     fontSize: number
     fontFamily: string
   }): string {
-    return `${fontStyle} ${fontVariant} ${fontWeight} ${fontStretch} ${this.#transformPixelNumberToString(fontSize)} ${fontFamily}`.trim()
+    return `${fontStyle} ${fontVariant} ${fontWeight} ${fontStretch} ${fontSize}px ${fontFamily}`.trim()
   }
 
   /**
@@ -707,8 +698,8 @@ class Editor {
     cursor.style.position = 'absolute'
     cursor.style.left = '0'
     cursor.style.top = '0'
-    cursor.style.width = this.#transformPixelNumberToString(cursorWidth)
-    cursor.style.height = this.#transformPixelNumberToString(cursorHeight * 1.5)
+    cursor.style.width = `${cursorWidth}px`
+    cursor.style.height = `${cursorHeight * 1.5}px`
     cursor.style.backgroundColor = cursorColor
     cursor.style.zIndex = cursorZIndex.toString()
     cursor.style.translate = 'none'
@@ -754,9 +745,9 @@ class Editor {
   #moveCursor(pos: Record<'top' | 'left' | 'width' | 'height', number>) {
     this.focus()
 
-    this.#cursor.style.translate = `${this.#transformPixelNumberToString(pos.left)} ${this.#transformPixelNumberToString(pos.top)}`
-    this.#cursor.style.width = this.#transformPixelNumberToString(pos.width)
-    this.#cursor.style.height = this.#transformPixelNumberToString(pos.height)
+    this.#cursor.style.translate = `${pos.left}px ${pos.top}px`
+    this.#cursor.style.width = `${pos.width}px`
+    this.#cursor.style.height = `${pos.height}px`
   }
 
   /**
