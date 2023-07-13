@@ -703,7 +703,7 @@ class Editor {
 
     cursor.hidden = true
 
-    cursor.style.position = 'absolute'
+    cursor.style.position = 'fixed'
     cursor.style.left = '0'
     cursor.style.top = '0'
     cursor.style.zIndex = cursorZIndex.toString()
@@ -766,15 +766,21 @@ class Editor {
     const textarea = document.createElement('textarea')
 
     textarea.style.position = 'fixed'
-    textarea.style.left = '0'
-    textarea.style.top = '0'
+    textarea.style.left = '-9999px'
+    textarea.style.top = '-9999px'
     textarea.style.zIndex = '-9999'
-    textarea.style.width = '1px'
-    textarea.style.height = '1px'
+    textarea.style.width = '0'
+    textarea.style.height = '0'
     textarea.style.translate = 'none'
     textarea.style.willChange = 'translate'
 
     textarea.addEventListener('input', console.log)
+    textarea.addEventListener('keydown', console.log)
+    textarea.addEventListener('keyup', console.log)
+    textarea.addEventListener('keypress', console.log)
+    textarea.addEventListener('compositionstart', console.log)
+    textarea.addEventListener('compositionupdate', console.log)
+    textarea.addEventListener('compositionend', console.log)
 
     this.container.appendChild(textarea)
 
