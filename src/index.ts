@@ -279,25 +279,25 @@ class Editor {
     // 点击点在某一字之内 
     for(const word of this.#words) {
       if (this.#pages[word!.pos!.page].canvas === canvas && word!.pos!.left <= x && x <= word!.pos!.right && word!.pos!.top <= y && y <= word!.pos!.bottom) {
-        return [x, y, word, 'word']
+        return [x - word!.pos!.left, y - word!.pos!.right, word, 'word']
       }
     }
 
     // 点击点在某一行之内
     for (const line of this.#lines) {
       if (this.#pages[line!.pos!.page].canvas === canvas && line.pos!.top <= y && line.pos!.bottom >= y && pagePadding[3] <= x && x <= pageWidth - pagePadding[1]) {
-        return [x, y, line.elements.at(-1)!, 'line']
+        return [0, 0, line.elements.at(-1)!, 'line']
       }
     }
 
     // 点击点在某页编辑区域之内
     for (const page of this.#pages) {
       if (page.canvas === canvas && pagePadding[0] <= y && y <= pageHeight - pagePadding[2] && pagePadding[3] <= x && x <= pageWidth - pagePadding[1]) {
-        return [x, y, page.lines.at(-1)!.elements.at(-1)!, 'page']
+        return [0, 0, page.lines.at(-1)!.elements.at(-1)!, 'page']
       }
     }
     // 其他
-    return [x, y, null]
+    return [0, 0, null]
   }
 
   /**
