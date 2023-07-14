@@ -1,3 +1,6 @@
+/**
+ * 编辑器选项
+ */
 interface EditorOptions {
   pageWidth: number
   pageHeight: number
@@ -29,6 +32,9 @@ interface EditorOptions {
   referenceLineJoin: 'bevel' | 'miter' | 'round',
 }
 
+/**
+ * 字选项
+ */
 interface Word {
   value: string
   style?: Partial<WordStyle>
@@ -36,6 +42,9 @@ interface Word {
   pos?: WordPos
 }
 
+/**
+ * 字样式选项
+ */
 interface WordStyle {
   fontColor: string
   fontSize: number
@@ -51,6 +60,9 @@ interface WordStyle {
   strikethroungh: boolean
 }
 
+/**
+ * 字尺寸选项
+ */
 interface WordInfo {
   width: number
   height: number
@@ -59,6 +71,9 @@ interface WordInfo {
   font: string
 }
 
+/**
+ * 字位置选项
+ */
 interface WordPos {
   top: number
   bottom: number
@@ -67,6 +82,9 @@ interface WordPos {
   page: number
 }
 
+/**
+ * 行选项
+ */
 interface Line {
   width: number
   height: number
@@ -77,12 +95,18 @@ interface Line {
   pos?: LinePos
 }
 
+/**
+ * 行位置选项
+ */
 interface LinePos {
   top: number
   bottom: number
   page: number
 }
 
+/**
+ * 页选项
+ */
 interface Page {
   canvas: HTMLCanvasElement
   lines: Line[]
