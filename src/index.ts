@@ -23,6 +23,10 @@ interface EditorOptions {
   cursorAnimationDuration: number
 
   referenceLine: boolean
+  referenceLineWidth: number
+  referenceLineColor: string
+  referenceLineCap: 'butt' | 'round' | 'square'
+  referenceLineJoin: 'bevel' | 'miter' | 'round',
 }
 
 interface Word {
@@ -116,6 +120,10 @@ class Editor {
     cursorAnimationDuration: 1000,
 
     referenceLine: false,
+    referenceLineWidth: 1,
+    referenceLineColor: '#ccc',
+    referenceLineCap: 'butt',
+    referenceLineJoin: 'round',
   }
 
   /**
@@ -355,15 +363,24 @@ class Editor {
     this.#contexts.set(canvas, context)
 
     if (this.options.referenceLine) {
+      const { referenceLineColor, referenceLineWidth, referenceLineCap, referenceLineJoin } = this.options
+
       context.save()
+
       context.beginPath()
-      context.strokeStyle = '#0c0'
+
+      context.lineWidth = referenceLineWidth
+      context.strokeStyle = referenceLineColor
+      context.lineCap = referenceLineCap
+      context.lineJoin = referenceLineJoin
+
       context.moveTo(pagePadding[3], pagePadding[0])
       context.lineTo(pageWidth - pagePadding[1], pagePadding[0])
       context.lineTo(pageWidth - pagePadding[1], pageHeight - pagePadding[2])
       context.lineTo(pagePadding[3], pageHeight - pagePadding[2])
       context.lineTo(pagePadding[3], pagePadding[0])
       context.stroke()
+
       context.restore()
     }
   }
@@ -640,12 +657,21 @@ class Editor {
     })
 
     if (this.options.referenceLine) {
+      const { referenceLineColor, referenceLineWidth, referenceLineCap, referenceLineJoin } = this.options
+
       context.save()
+
       context.beginPath()
-      context.strokeStyle = '#a00'
+
+      context.lineWidth = referenceLineWidth
+      context.strokeStyle = referenceLineColor
+      context.lineCap = referenceLineCap
+      context.lineJoin = referenceLineJoin
+
       context.moveTo(pagePadding[3], renderHeight + pagePadding[0] + line.lineHeight)
       context.lineTo(this.options.pageWidth - pagePadding[1], renderHeight + pagePadding[0] + line.lineHeight)
       context.stroke()
+
       context.restore()
     }
   }
