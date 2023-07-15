@@ -162,6 +162,7 @@ class Editor {
     this.id = Math.round(Math.random() * 10000)
     this.container = container
     this.options = Object.assign({}, Editor.options, options)
+    this.isEditor = true
     this.#pages = []
     this.#lines = []
     this.#words = Object.assign(words)
@@ -189,6 +190,11 @@ class Editor {
    * 编辑器实例选项
    */
   readonly options: EditorOptions
+
+  /**
+   * 标记为editor选项
+   */
+  readonly isEditor: boolean
 
   /**
    * 编辑器页面列表
