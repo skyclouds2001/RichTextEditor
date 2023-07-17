@@ -759,9 +759,9 @@ class Editor {
 
     cursor.hidden = true
 
-    cursor.style.position = 'fixed'
-    cursor.style.left = '0'
-    cursor.style.top = '0'
+    cursor.style.position = 'absolute'
+    cursor.style.left = '-9999px'
+    cursor.style.top = '-9999px'
     cursor.style.zIndex = cursorZIndex.toString()
     cursor.style.width = `${cursorWidth}px`
     cursor.style.height = `${cursorHeight * 1.5}px`
