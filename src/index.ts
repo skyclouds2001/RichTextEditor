@@ -844,17 +844,30 @@ class Editor {
     textarea.style.translate = 'none'
     textarea.style.willChange = 'translate'
 
-    textarea.addEventListener('input', console.log)
+    textarea.addEventListener('input', this.#onInput.bind(this))
     textarea.addEventListener('compositionstart', () => {
       this.#isComposition = true
     })
-    textarea.addEventListener('compositionend', , () => {
+    textarea.addEventListener('compositionend', () => {
       this.#isComposition = false
     })
 
     this.container.appendChild(textarea)
 
     return textarea
+  }
+
+  /**
+   * 输入事件回调 用于记录输入数据
+   * @param e 鼠标落下事件
+   */
+  #onInput(e: Event) {
+    const { data } = e as InputEvent
+    setTimeout(() => {
+      if (this.#isComposition || !data) return
+
+      console.log(e)
+    }, 0)
   }
 
   /**
