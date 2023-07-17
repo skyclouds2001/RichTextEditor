@@ -194,6 +194,7 @@ class Editor {
     this.#cursor = this.#initCursor()
     this.#cursorIndex = -1
     this.#textarea = this.#initTextarea()
+    this.#isComposition = false
 
     this.#init()
 
@@ -255,6 +256,11 @@ class Editor {
    * 编辑器输入器实例
    */
   readonly #textarea: HTMLTextAreaElement
+
+  /**
+   * 是否拼音输入模式
+   */
+  #isComposition: boolean
 
   /**
    * 重设编辑器方法
@@ -839,12 +845,12 @@ class Editor {
     textarea.style.willChange = 'translate'
 
     textarea.addEventListener('input', console.log)
-    textarea.addEventListener('keydown', console.log)
-    textarea.addEventListener('keyup', console.log)
-    textarea.addEventListener('keypress', console.log)
-    textarea.addEventListener('compositionstart', console.log)
-    textarea.addEventListener('compositionupdate', console.log)
-    textarea.addEventListener('compositionend', console.log)
+    textarea.addEventListener('compositionstart', () => {
+      this.#isComposition = true
+    })
+    textarea.addEventListener('compositionend', , () => {
+      this.#isComposition = false
+    })
 
     this.container.appendChild(textarea)
 
