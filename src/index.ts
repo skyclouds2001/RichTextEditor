@@ -192,6 +192,7 @@ class Editor {
     this.#words = Object.assign(words)
     this.#contexts = new WeakMap()
     this.#cursor = this.#initCursor()
+    this.#cursorIndex = -1
     this.#textarea = this.#initTextarea()
 
     this.#init()
@@ -244,6 +245,11 @@ class Editor {
    * 编辑器光标实例
    */
   readonly #cursor: HTMLDivElement
+
+  /**
+   * 编辑器光标下标
+   */
+  #cursorIndex: number
 
   /**
    * 编辑器输入器实例
@@ -360,6 +366,8 @@ class Editor {
     const pos = this.#generateCursorInfo(word, page, type)
 
     this.#moveCursor(pos)
+
+    this.#cursorIndex = this.#words.findIndex(v => v === word)
   }
 
   /**
