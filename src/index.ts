@@ -867,6 +867,8 @@ class Editor {
     setTimeout(() => {
       if (this.#isComposition || !data) return
 
+      const { pageWidth, pageHeight } = this.options
+
       const words = data.split('').map((v => ({
         value: v,
       }) satisfies Word))
@@ -874,7 +876,7 @@ class Editor {
       this.#words.splice(this.#cursorIndex, 0, ...words)
 
       this.#pages.forEach((v) => {
-        this.#contexts.get(v.canvas)?.clearRect(0, 0, this.options.pageWidth, this.options.pageHeight)
+        this.#contexts.get(v.canvas)?.clearRect(0, 0, pageWidth, pageHeight)
       })
       this.#lines.length = 0
       this.#measureLine()
