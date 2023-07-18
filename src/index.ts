@@ -730,7 +730,7 @@ class Editor {
 
     let pageIndex = 0
     let renderHeight = 0
-    if (!this.#pages[pageIndex]) {
+    if (!this.#pages.at(pageIndex)) {
       this.#createPage()
     }
 
@@ -738,12 +738,12 @@ class Editor {
       if (line.lineHeight + renderHeight > contentHeight) {
         renderHeight = 0
         ++pageIndex
-        if (!this.#pages[pageIndex]) {
+        if (!this.#pages.at(pageIndex)) {
           this.#createPage()
         }
       }
 
-      const canvas = this.#pages.at(-1)!.canvas
+      const canvas = this.#pages.at(pageIndex)!.canvas
       const context = this.#contexts.get(canvas)!
 
       this.#renderIndicator(context)
@@ -863,10 +863,22 @@ class Editor {
    */
   #onInput(e: Event) {
     const { data } = e as InputEvent
+
     setTimeout(() => {
       if (this.#isComposition || !data) return
 
-      console.log(e)
+      const words = data.split('').map((v => ({
+        value: v,
+      }) satisfies Word))
+
+      this.#words.splice(this.#cursorIndex, 0, ...words)
+
+      this.#pages.forEach((v) => {
+        this.#contexts.get(v.canvas)?.clearRect(0, 0, this.options.pageWidth, this.options.pageHeight)
+      })
+      this.#lines.length = 0
+      this.#measureLine()
+      this.#renderPage()
     }, 0)
   }
 
