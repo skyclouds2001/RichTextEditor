@@ -835,6 +835,8 @@ class Editor {
   #initTextarea() {
     const textarea = document.createElement('textarea')
 
+    textarea.name = 'input'
+
     textarea.style.position = 'fixed'
     textarea.style.left = '-9999px'
     textarea.style.top = '-9999px'
@@ -873,7 +875,11 @@ class Editor {
         value: v,
       }) satisfies Word))
 
-      this.#words.splice(this.#cursorIndex, 0, ...words)
+      if (this.#cursorIndex !== -1) {
+        this.#words.splice(this.#cursorIndex, 0, ...words)
+      } else {
+        this.#words.push(...words)
+      }
 
       this.#pages.forEach((v) => {
         this.#contexts.get(v.canvas)?.clearRect(0, 0, pageWidth, pageHeight)
