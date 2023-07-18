@@ -751,7 +751,7 @@ class Editor {
       line.pos = {
         top: renderHeight + pagePadding[0],
         bottom: renderHeight + line.lineHeight + pagePadding[0],
-        page: this.#pages.length - 1,
+        page: pageIndex,
       } satisfies LinePos
 
       this.#renderLine(line, context, renderHeight)
