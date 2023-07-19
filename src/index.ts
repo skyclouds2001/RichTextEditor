@@ -543,6 +543,8 @@ class Editor {
 
     const contentWidth = pageWidth - pagePadding[1] - pagePadding[3]
 
+    this.#lines.length = 0
+
     this.#lines.push({
       width: 0,
       height: fontSize,
@@ -742,9 +744,13 @@ class Editor {
    * 渲染页面方法
    */
   #renderPage() {
-    const { pageHeight, pagePadding } = this.options
+    const { pageHeight, pagePadding, pageWidth } = this.options
 
     const contentHeight = pageHeight - pagePadding[0] - pagePadding[2]
+
+    this.#pages.forEach((v) => {
+      this.#contexts.get(v.canvas)?.clearRect(0, 0, pageWidth, pageHeight)
+    })
 
     let pageIndex = 0
     let renderHeight = 0
@@ -892,8 +898,6 @@ class Editor {
     setTimeout(() => {
       if (this.#isComposition || !data) return
 
-      const { pageWidth, pageHeight } = this.options
-
       const words = data.split('').map((v => ({
         value: v,
         style: this.#words[this.#cursorIndex - 1]?.style,
@@ -905,10 +909,6 @@ class Editor {
         this.#words.push(...words)
       }
 
-      this.#pages.forEach((v) => {
-        this.#contexts.get(v.canvas)?.clearRect(0, 0, pageWidth, pageHeight)
-      })
-      this.#lines.length = 0
       this.#measureLine()
       this.#renderPage()
 
@@ -926,12 +926,7 @@ class Editor {
 
     switch(e.key) {
       case 'Delete':
-        const { pageWidth, pageHeight } = this.options
         this.#words.splice(this.#cursorIndex, 1)
-        this.#pages.forEach((v) => {
-          this.#contexts.get(v.canvas)?.clearRect(0, 0, pageWidth, pageHeight)
-        })
-        this.#lines.length = 0
         this.#measureLine()
         this.#renderPage()
         break
