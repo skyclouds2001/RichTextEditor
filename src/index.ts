@@ -864,6 +864,8 @@ class Editor {
     const textarea = document.createElement('textarea')
 
     textarea.name = 'input'
+    textarea.autocomplete = 'off'
+    textarea.autofocus = false
 
     textarea.style.position = 'fixed'
     textarea.style.left = '-9999px'
@@ -872,6 +874,7 @@ class Editor {
     textarea.style.width = '0'
     textarea.style.height = '0'
     textarea.style.translate = 'none'
+    textarea.style.resize = 'none'
     textarea.style.willChange = 'translate'
 
     textarea.addEventListener('input', this.#onInput.bind(this))
@@ -922,8 +925,6 @@ class Editor {
    * @param e 键盘按下事件
    */
   #onKeyPress(e: KeyboardEvent) {
-    console.log(e.key)
-
     switch(e.key) {
       case 'Delete':
         this.#words.splice(this.#cursorIndex, 1)
