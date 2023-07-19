@@ -372,6 +372,7 @@ class Editor {
     const pos = this.#generateCursorInfo(word, page, type)
 
     this.#moveCursor(pos)
+    this.#moveTextarea(pos)
 
     const index = this.#words.findIndex(v => v === word)
     this.#cursorIndex = index !== -1 && mode === 'word' && type === 'aft' ? index + 1 : index
@@ -847,6 +848,7 @@ class Editor {
 
   /**
    * 移动光标
+   * @param pos 移动目标位置
    */
   #moveCursor(pos: Record<'top' | 'left' | 'width' | 'height', number>) {
     this.#cursor.style.translate = `${pos.left}px ${pos.top}px`
@@ -868,11 +870,12 @@ class Editor {
     textarea.autofocus = false
 
     textarea.style.position = 'fixed'
-    textarea.style.left = '-9999px'
-    textarea.style.top = '-9999px'
+    textarea.style.left = '0'
+    textarea.style.top = '0'
     textarea.style.zIndex = '-9999'
     textarea.style.width = '0'
     textarea.style.height = '0'
+    textarea.style.opacity = '0'
     textarea.style.translate = 'none'
     textarea.style.resize = 'none'
     textarea.style.willChange = 'translate'
@@ -889,6 +892,14 @@ class Editor {
     this.container.appendChild(textarea)
 
     return textarea
+  }
+
+  /**
+   * 移动文本框
+   * @param pos 移动目标位置
+   */
+  #moveTextarea(pos: Record<'left' | 'top', number>) {
+    this.#textarea.style.translate = `${pos.left}px ${pos.top}px`
   }
 
   /**
