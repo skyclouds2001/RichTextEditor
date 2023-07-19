@@ -889,6 +889,9 @@ class Editor {
       this.#lines.length = 0
       this.#measureLine()
       this.#renderPage()
+
+      this.#cursorIndex += words.length
+      this.#moveCursor(this.#generateCursorInfo(words.at(-1)!, this.#pages[0].canvas, 'aft'))
     }, 0)
   }
 
