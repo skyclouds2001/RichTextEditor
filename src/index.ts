@@ -901,7 +901,7 @@ class Editor {
       const words = data.split('').map((v => ({
         value: v,
         style: this.#words[this.#cursorIndex - 1]?.style,
-      }) satisfies Word))
+      }) as Word))
 
       if (this.#cursorIndex !== -1) {
         this.#words.splice(this.#cursorIndex, 0, ...words)
@@ -913,7 +913,7 @@ class Editor {
       this.#renderPage()
 
       this.#cursorIndex += words.length
-      this.#moveCursor(this.#generateCursorInfo(words.at(-1)!, this.#pages[0].canvas, 'aft'))
+      this.#moveCursor(this.#generateCursorInfo(words.at(-1)!, this.#pages[words.at(-1)!.pos!.page].canvas, 'aft'))
     }, 0)
   }
 
