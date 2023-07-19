@@ -874,7 +874,7 @@ class Editor {
 
       const words = data.split('').map((v => ({
         value: v,
-        style: this.#words[this.#cursorIndex].style,
+        style: this.#words[this.#cursorIndex - 1]?.style,
       }) satisfies Word))
 
       if (this.#cursorIndex !== -1) {
