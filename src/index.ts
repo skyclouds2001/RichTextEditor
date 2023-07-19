@@ -938,6 +938,11 @@ class Editor {
         this.#measureLine()
         this.#renderPage()
         break
+      case 'Backspace':
+        this.#words.splice(this.#cursorIndex - 1, 1)
+        this.#measureLine()
+        this.#renderPage()
+        break
     }
   }
 
