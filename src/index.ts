@@ -579,7 +579,7 @@ class Editor {
   }
 
   /**
-   * 绘制页面参考线
+   * 绘制页参考线
    * @param context 绘图上下文
    */
   #renderPageReferenceLine(context: CanvasRenderingContext2D) {
@@ -599,6 +599,30 @@ class Editor {
     context.lineTo(pageWidth - pagePadding[1], pageHeight - pagePadding[2])
     context.lineTo(pagePadding[3], pageHeight - pagePadding[2])
     context.lineTo(pagePadding[3], pagePadding[0])
+    context.stroke()
+
+    context.restore()
+  }
+
+  /**
+   * 绘制行参考线
+   * @param context 绘图上下文
+   * @param top 距上距离大小
+   */
+  #renderLineReferenceLine(context: CanvasRenderingContext2D, top: number) {
+    const { pagePadding, pageWidth, referenceLineColor, referenceLineWidth, referenceLineCap, referenceLineJoin } = this.options
+
+    context.save()
+
+    context.beginPath()
+
+    context.lineWidth = referenceLineWidth
+    context.strokeStyle = referenceLineColor
+    context.lineCap = referenceLineCap
+    context.lineJoin = referenceLineJoin
+
+    context.moveTo(pagePadding[3], top)
+    context.lineTo(pageWidth - pagePadding[1], top)
     context.stroke()
 
     context.restore()
@@ -710,22 +734,7 @@ class Editor {
     })
 
     if (this.options.referenceLine) {
-      const { referenceLineColor, referenceLineWidth, referenceLineCap, referenceLineJoin } = this.options
-
-      context.save()
-
-      context.beginPath()
-
-      context.lineWidth = referenceLineWidth
-      context.strokeStyle = referenceLineColor
-      context.lineCap = referenceLineCap
-      context.lineJoin = referenceLineJoin
-
-      context.moveTo(pagePadding[3], renderHeight + pagePadding[0] + line.lineHeight)
-      context.lineTo(this.options.pageWidth - pagePadding[1], renderHeight + pagePadding[0] + line.lineHeight)
-      context.stroke()
-
-      context.restore()
+      this.#renderLineReferenceLine(context, renderHeight + pagePadding[0] + line.lineHeight)
     }
   }
 
