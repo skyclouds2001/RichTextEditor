@@ -362,7 +362,7 @@ class Editor {
 
     const [,, word, mode] = this.#getWordPositionFromCanvasPosition(x, y, page)
 
-    if(word === -1 || !mode) {
+    if(!word || !mode) {
       this.blur()
       return
     }
@@ -440,7 +440,7 @@ class Editor {
    * @param canvas 当前canvas下标
    * @returns 字
    */
-  #getWordPositionFromCanvasPosition(x: number, y: number, page: number): [x: number, y: number, word: number, type: 'word' | 'line' | 'page' | null] {
+  #getWordPositionFromCanvasPosition(x: number, y: number, page: number): [x: number, y: number, word: number | null, type: 'word' | 'line' | 'page' | null] {
     const { pageHeight, pagePadding, pageWidth } = this.options
 
     // 点击点在某一字之内
@@ -459,12 +459,10 @@ class Editor {
 
     // 点击点在某页编辑区域之内
     if (pagePadding[0] <= y && y <= pageHeight - pagePadding[2] && pagePadding[3] <= x && x <= pageWidth - pagePadding[1]) {
-      const line = this.#pages.at(page)!.lines.at(-1)!
-
-      return [0, 0, this.#words.findIndex(v => v === line.elements.at(-1)), 'page']
+      return [0, 0, this.#words.findIndex(v => v === this.#pages.at(page)!.lines.at(-1)!.elements.at(-1)), 'page']
     }
     // 其他
-    return [0, 0, -1, null]
+    return [0, 0, null, null]
   }
 
   /**
@@ -920,6 +918,7 @@ class Editor {
    */
   focus() {
     this.#cursor.hidden = false
+    this.#cursorIndex = -1
     this.#textarea.focus()
   }
 
@@ -928,6 +927,7 @@ class Editor {
    */
   blur() {
     this.#cursor.hidden = true
+    this.#cursorIndex = -1
     this.#textarea.blur()
   }
 }
