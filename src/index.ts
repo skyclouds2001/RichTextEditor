@@ -869,14 +869,17 @@ class Editor {
     setTimeout(() => {
       if (this.#isComposition || !data) return
 
+      const isEndOfLine = this.#words[this.#cursorIndex].value === '\n'
+
       const { pageWidth, pageHeight } = this.options
 
       const words = data.split('').map((v => ({
         value: v,
+        style: this.#words[this.#cursorIndex - (isEndOfLine ? 1 : 0)].style,
       }) satisfies Word))
 
       if (this.#cursorIndex !== -1) {
-        this.#words.splice(this.#cursorIndex, 0, ...words)
+        this.#words.splice(this.#cursorIndex + (isEndOfLine ? 0 : 1), 0, ...words)
       } else {
         this.#words.push(...words)
       }
