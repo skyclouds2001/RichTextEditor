@@ -284,21 +284,21 @@ class Editor {
   }
 
   /**
-   * 将全局下鼠标位置转换为确定的页面实例及相对其的坐标
+   * 将全局下鼠标位置转换为确定的页面下标及相对其的坐标
    * @param x 全局鼠标x位置
    * @param y 全局鼠标y位置
-   * @returns 相对页面实例鼠标位置及对应页面实例
+   * @returns 相对页面实例鼠标位置及对应页面下标
    */
-  #transformWindowPositionToCanvasPosition(x: number, y: number): [x: number, y: number, instance: HTMLCanvasElement | null] {
+  #transformWindowPositionToCanvasPosition(x: number, y: number): [x: number, y: number, page: number] {
     // 点击点在某页之内
     for(const i in this.#pages) {
       const { offsetLeft, offsetTop, width, height } = this.#pages[i].canvas
       if (offsetLeft <= x && x <= offsetLeft + width && offsetTop <= y && y <= offsetTop + height ) {
-        return [x - offsetLeft, y - offsetTop, this.#pages[i].canvas]
+        return [x - offsetLeft, y - offsetTop, Number.parseInt(i)]
       }
     }
     // 其他
-    return [0, 0, null]
+    return [0, 0, -1]
   }
 
   /**
@@ -355,7 +355,7 @@ class Editor {
   #onMouseDown(e: MouseEvent) {
     const [x, y, page] = this.#transformWindowPositionToCanvasPosition(e.pageX, e.pageY)
 
-    if (!page) {
+    if (page === -1) {
       this.blur()
       return
     }
@@ -369,7 +369,7 @@ class Editor {
 
     const type = mode === 'word' && x < word.pos!.left + word.info!.width / 2 ? 'pre' : 'aft'
 
-    const pos = this.#generateCursorInfo(word, page, type)
+    const pos = this.#generateCursorInfo(word, this.#pages.at(page)!.canvas, type)
 
     this.#moveCursor(pos)
     this.#moveTextarea(pos)
@@ -441,19 +441,19 @@ class Editor {
    * @param canvas 当前canvas下标
    * @returns 字
    */
-  #getWordPositionFromCanvasPosition(x: number, y: number, canvas: HTMLCanvasElement): [x: number, y: number, word: Word | null, type?: 'word' | 'line' | 'page'] {
+  #getWordPositionFromCanvasPosition(x: number, y: number, page: number): [x: number, y: number, word: Word | null, type: 'word' | 'line' | 'page' | null] {
     const { pageHeight, pagePadding, pageWidth } = this.options
 
     // 点击点在某一字之内 
     for(const word of this.#words) {
-      if (this.#pages[word!.pos!.page].canvas === canvas && word!.pos!.left <= x && x <= word!.pos!.right && word!.pos!.top <= y && y <= word!.pos!.bottom) {
+      if (word!.pos!.page === page && word!.pos!.left <= x && x <= word!.pos!.right && word!.pos!.top <= y && y <= word!.pos!.bottom) {
         return [x - word!.pos!.left, y - word!.pos!.right, word, 'word']
       }
     }
 
     // 点击点在某一行之内
     for (const line of this.#lines) {
-      if (this.#pages[line!.pos!.page].canvas === canvas && line.pos!.top <= y && line.pos!.bottom >= y && pagePadding[3] <= x && x <= pageWidth - pagePadding[1]) {
+      if (line!.pos!.page === page && line.pos!.top <= y && line.pos!.bottom >= y && pagePadding[3] <= x && x <= pageWidth - pagePadding[1]) {
         // 默认取该行最后一个元素，若为最后一行且空行时无法取到值则赋默认值
         const word = line.elements.at(-1) ?? {
           value: '',
@@ -478,35 +478,33 @@ class Editor {
     }
 
     // 点击点在某页编辑区域之内
-    for (const page of this.#pages) {
-      if (page.canvas === canvas && pagePadding[0] <= y && y <= pageHeight - pagePadding[2] && pagePadding[3] <= x && x <= pageWidth - pagePadding[1]) {
+    if (pagePadding[0] <= y && y <= pageHeight - pagePadding[2] && pagePadding[3] <= x && x <= pageWidth - pagePadding[1]) {
 
-        const line = page.lines.at(-1)!
+      const line = this.#pages.at(page)!.lines.at(-1)!
 
-        // 同上
-        const word = line.elements.at(-1) ?? {
-          value: '',
-          pos: {
-            left: pagePadding[3],
-            right: pagePadding[3] + 0,
-            top: line.pos!.top,
-            bottom: line.pos!.top + line.height,
-            page: line!.pos!.page,
-          },
-          info: {
-            width: 0,
-            height: 0,
-            ascent: 0,
-            descent: 0,
-            font: '',
-          },
-        } satisfies Word
+      // 同上
+      const word = line.elements.at(-1) ?? {
+        value: '',
+        pos: {
+          left: pagePadding[3],
+          right: pagePadding[3] + 0,
+          top: line.pos!.top,
+          bottom: line.pos!.top + line.height,
+          page: line!.pos!.page,
+        },
+        info: {
+          width: 0,
+          height: 0,
+          ascent: 0,
+          descent: 0,
+          font: '',
+        },
+      } satisfies Word
 
-        return [0, 0, word, 'page']
-      }
+      return [0, 0, word, 'page']
     }
     // 其他
-    return [0, 0, null]
+    return [0, 0, null, null]
   }
 
   /**
