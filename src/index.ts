@@ -381,7 +381,7 @@ class Editor {
    * 新建页面方法
    */
   #createPage() {
-    const { pageWidth, pageHeight, pageMargin, pagePadding, pageBackgroundColor, pageBorder, pageBorderRadius, pageBoxShadow } = this.options
+    const { pageWidth, pageHeight, pageMargin, pageBackgroundColor, pageBorder, pageBorderRadius, pageBoxShadow } = this.options
 
     const canvas = document.createElement('canvas')
 
@@ -408,25 +408,7 @@ class Editor {
     this.#contexts.set(canvas, context)
 
     if (this.options.referenceLine) {
-      const { referenceLineColor, referenceLineWidth, referenceLineCap, referenceLineJoin } = this.options
-
-      context.save()
-
-      context.beginPath()
-
-      context.lineWidth = referenceLineWidth
-      context.strokeStyle = referenceLineColor
-      context.lineCap = referenceLineCap
-      context.lineJoin = referenceLineJoin
-
-      context.moveTo(pagePadding[3], pagePadding[0])
-      context.lineTo(pageWidth - pagePadding[1], pagePadding[0])
-      context.lineTo(pageWidth - pagePadding[1], pageHeight - pagePadding[2])
-      context.lineTo(pagePadding[3], pageHeight - pagePadding[2])
-      context.lineTo(pagePadding[3], pagePadding[0])
-      context.stroke()
-
-      context.restore()
+      this.#renderPageReferenceLine(context)
     }
   }
 
@@ -597,6 +579,32 @@ class Editor {
   }
 
   /**
+   * 绘制页面参考线
+   * @param context 绘图上下文
+   */
+  #renderPageReferenceLine(context: CanvasRenderingContext2D) {
+    const { pagePadding, pageWidth, pageHeight, referenceLineColor, referenceLineWidth, referenceLineCap, referenceLineJoin } = this.options
+
+    context.save()
+
+    context.beginPath()
+
+    context.lineWidth = referenceLineWidth
+    context.strokeStyle = referenceLineColor
+    context.lineCap = referenceLineCap
+    context.lineJoin = referenceLineJoin
+
+    context.moveTo(pagePadding[3], pagePadding[0])
+    context.lineTo(pageWidth - pagePadding[1], pagePadding[0])
+    context.lineTo(pageWidth - pagePadding[1], pageHeight - pagePadding[2])
+    context.lineTo(pagePadding[3], pageHeight - pagePadding[2])
+    context.lineTo(pagePadding[3], pagePadding[0])
+    context.stroke()
+
+    context.restore()
+  }
+
+  /**
    * 绘制直角器
    * @param context canvas绘图上下文
    */
@@ -733,6 +741,8 @@ class Editor {
     let renderHeight = 0
     if (!this.#pages.at(pageIndex)) {
       this.#createPage()
+    } else{
+      this.#renderPageReferenceLine(this.#contexts.get(this.#pages.at(pageIndex)!.canvas)!)
     }
 
     this.#lines.forEach((line) => {
@@ -741,6 +751,8 @@ class Editor {
         ++pageIndex
         if (!this.#pages.at(pageIndex)) {
           this.#createPage()
+        } else{
+          this.#renderPageReferenceLine(this.#contexts.get(this.#pages.at(pageIndex)!.canvas)!)
         }
       }
 
