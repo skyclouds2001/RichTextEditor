@@ -905,8 +905,6 @@ class Editor {
 
     switch(e.key) {
       case 'Delete':
-        if (this.#words[this.#cursorIndex].value === '\n') return
-
         const { pageWidth, pageHeight } = this.options
         this.#words.splice(this.#cursorIndex, 1)
         this.#pages.forEach((v) => {
