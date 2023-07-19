@@ -854,6 +854,7 @@ class Editor {
     textarea.addEventListener('compositionend', () => {
       this.#isComposition = false
     })
+    textarea.addEventListener('keydown', this.#onKeyPress.bind(this))
 
     this.container.appendChild(textarea)
 
@@ -893,6 +894,29 @@ class Editor {
       this.#cursorIndex += words.length
       this.#moveCursor(this.#generateCursorInfo(words.at(-1)!, this.#pages[0].canvas, 'aft'))
     }, 0)
+  }
+
+  /**
+   * 键盘按下事件回调 用于实现相关操作
+   * @param e 键盘按下事件
+   */
+  #onKeyPress(e: KeyboardEvent) {
+    console.log(e.key)
+
+    switch(e.key) {
+      case 'Delete':
+        if (this.#words[this.#cursorIndex].value === '\n') return
+
+        const { pageWidth, pageHeight } = this.options
+        this.#words.splice(this.#cursorIndex, 1)
+        this.#pages.forEach((v) => {
+          this.#contexts.get(v.canvas)?.clearRect(0, 0, pageWidth, pageHeight)
+        })
+        this.#lines.length = 0
+        this.#measureLine()
+        this.#renderPage()
+        break
+    }
   }
 
   /**
