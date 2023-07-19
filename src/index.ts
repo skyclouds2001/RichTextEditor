@@ -362,20 +362,19 @@ class Editor {
 
     const [,, word, mode] = this.#getWordPositionFromCanvasPosition(x, y, page)
 
-    if(!word || !mode) {
+    if(word === -1 || !mode) {
       this.blur()
       return
     }
 
-    const type = mode === 'word' && x < word.pos!.left + word.info!.width / 2 ? 'pre' : 'aft'
+    const type = mode === 'word' && x < this.#words[word].pos!.left + this.#words[word].info!.width / 2 ? 'pre' : 'aft'
 
-    const pos = this.#generateCursorInfo(word, this.#pages.at(page)!.canvas, type)
+    const pos = this.#generateCursorInfo(word, page, type)
 
     this.#moveCursor(pos)
     this.#moveTextarea(pos)
 
-    const index = this.#words.findIndex(v => v === word)
-    this.#cursorIndex = index !== -1 && mode === 'word' && type === 'aft' ? index + 1 : index
+    this.#cursorIndex = word !== -1 && mode === 'word' && type === 'aft' ? word + 1 : word
   }
 
   /**
@@ -441,70 +440,31 @@ class Editor {
    * @param canvas 当前canvas下标
    * @returns 字
    */
-  #getWordPositionFromCanvasPosition(x: number, y: number, page: number): [x: number, y: number, word: Word | null, type: 'word' | 'line' | 'page' | null] {
+  #getWordPositionFromCanvasPosition(x: number, y: number, page: number): [x: number, y: number, word: number, type: 'word' | 'line' | 'page' | null] {
     const { pageHeight, pagePadding, pageWidth } = this.options
 
-    // 点击点在某一字之内 
-    for(const word of this.#words) {
-      if (word!.pos!.page === page && word!.pos!.left <= x && x <= word!.pos!.right && word!.pos!.top <= y && y <= word!.pos!.bottom) {
-        return [x - word!.pos!.left, y - word!.pos!.right, word, 'word']
+    // 点击点在某一字之内
+    for (const i in this.#words) {
+      if (this.#words[i]!.pos!.page === page && this.#words[i]!.pos!.left <= x && x <= this.#words[i]!.pos!.right && this.#words[i]!.pos!.top <= y && y <= this.#words[i]!.pos!.bottom) {
+        return [x - this.#words[i]!.pos!.left, y - this.#words[i]!.pos!.right, parseInt(i), 'word']
       }
     }
 
     // 点击点在某一行之内
     for (const line of this.#lines) {
       if (line!.pos!.page === page && line.pos!.top <= y && line.pos!.bottom >= y && pagePadding[3] <= x && x <= pageWidth - pagePadding[1]) {
-        // 默认取该行最后一个元素，若为最后一行且空行时无法取到值则赋默认值
-        const word = line.elements.at(-1) ?? {
-          value: '',
-          pos: {
-            left: pagePadding[3],
-            right: pagePadding[3] + 0,
-            top: line.pos!.top,
-            bottom: line.pos!.top + line.height,
-            page: line!.pos!.page,
-          },
-          info: {
-            width: 0,
-            height: 0,
-            ascent: 0,
-            descent: 0,
-            font: '',
-          },
-        } satisfies Word
-
-        return [0, 0, word, 'line']
+        return [0, 0, this.#words.findIndex(v => v === line.elements.at(-1)), 'line']
       }
     }
 
     // 点击点在某页编辑区域之内
     if (pagePadding[0] <= y && y <= pageHeight - pagePadding[2] && pagePadding[3] <= x && x <= pageWidth - pagePadding[1]) {
-
       const line = this.#pages.at(page)!.lines.at(-1)!
 
-      // 同上
-      const word = line.elements.at(-1) ?? {
-        value: '',
-        pos: {
-          left: pagePadding[3],
-          right: pagePadding[3] + 0,
-          top: line.pos!.top,
-          bottom: line.pos!.top + line.height,
-          page: line!.pos!.page,
-        },
-        info: {
-          width: 0,
-          height: 0,
-          ascent: 0,
-          descent: 0,
-          font: '',
-        },
-      } satisfies Word
-
-      return [0, 0, word, 'page']
+      return [0, 0, this.#words.findIndex(v => v === line.elements.at(-1)), 'page']
     }
     // 其他
-    return [0, 0, null, null]
+    return [0, 0, -1, null]
   }
 
   /**
@@ -828,13 +788,13 @@ class Editor {
    * @param word 字位置
    * @returns 光标信息
    */
-  #generateCursorInfo(word: Word, page: HTMLCanvasElement, type: 'pre' | 'aft'): Record<'top' | 'left' | 'width' | 'height', number> {
+  #generateCursorInfo(word: number, page: number, type: 'pre' | 'aft'): Record<'top' | 'left' | 'width' | 'height', number> {
     const { fontSize } = this.options
 
     const width = 1
-    const height = Math.max(word.info!.height, fontSize) * 1.5
+    const height = Math.max(this.#words[word].info!.height, fontSize) * 1.5
 
-    const [left, top] = this.#transformCanvasPositionToWindowPosition(type === 'pre' ? word.pos!.left : word.pos!.right, word.pos!.top - (word.value === '' ? 0 : height / 6), page)
+    const [left, top] = this.#transformCanvasPositionToWindowPosition(type === 'pre' ? this.#words[word].pos!.left : this.#words[word].pos!.right, this.#words[word].pos!.top - (this.#words[word].value === '' ? 0 : height / 6), this.#pages[page].canvas)
 
     return {
       top,
@@ -925,7 +885,7 @@ class Editor {
       this.#renderPage()
 
       this.#cursorIndex += words.length
-      this.#moveCursor(this.#generateCursorInfo(words.at(-1)!, this.#pages[words.at(-1)!.pos!.page].canvas, 'aft'))
+      this.#moveCursor(this.#generateCursorInfo(this.#cursorIndex, words.at(-1)!.pos!.page, 'aft'))
     }, 0)
   }
 
