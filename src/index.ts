@@ -750,7 +750,7 @@ class Editor {
 
     this.#pages.forEach((v) => {
       this.#contexts.get(v.canvas)?.clearRect(0, 0, pageWidth, pageHeight)
-    })
+    }) 
 
     let pageIndex = 0
     let renderHeight = 0
@@ -927,6 +927,13 @@ class Editor {
     switch(e.key) {
       case 'Delete':
         this.#words.splice(this.#cursorIndex, 1)
+        this.#measureLine()
+        this.#renderPage()
+        break
+      case 'Enter':
+        this.#words.splice(this.#cursorIndex, 0, {
+          value: '\n',
+        })
         this.#measureLine()
         this.#renderPage()
         break
