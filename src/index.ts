@@ -47,7 +47,15 @@ class TextEditor {
     container.style.height = '100%'
     container.style.minHeight = '400px'
 
+    container.style.border = 'none'
+
     this.#app.appendChild(container)
+
+    const style = document.createElement('style')
+
+    style.id = `container-style-${this.#id}`
+
+    container.contentDocument?.head.appendChild(style)
 
     container.contentDocument!.body.style.margin = '0'
     container.contentDocument!.body.style.padding = '0'
@@ -61,43 +69,57 @@ class TextEditor {
 
     controller.id = `controller-${this.#id}`
 
-    controller.style.margin = '0'
-    controller.style.padding = '10px 5px'
-    controller.style.boxSizing = 'border-box'
-
-    controller.style.width = '100%'
-    controller.style.height = 'auto'
-
-    controller.style.display = 'flex'
-    controller.style.justifyContent = 'flex-start'
-    controller.style.alignItems = 'align-items'
+    this.#container.contentDocument?.styleSheets.item(0)?.insertRule(`
+      #controller-${this.#id} {
+        margin: 0;
+        padding: 5px 2.5px;
+        box-sizing: border-box;
+  
+        width: 100%;
+        height: auto;
+  
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+  
+        border: 1px solid #ccc;
+        border-bottom: 0;
+      }
+    `)
 
     TextEditor.controllers.forEach((v) => {
       const button = document.createElement('button')
 
+      button.id = `controller-button-${v.cmd}`
+
+      button.setAttribute('data-icon', v.name)
       button.setAttribute('data-cmd', v.cmd)
 
-      button.style.cssText = `
-        margin: 0 5px;
-        padding: 0;
-        box-sizing: border-box;
+      this.#container.contentDocument?.styleSheets.item(0)?.insertRule(`
+        #controller-button-${v.cmd} {
+          margin: 0 2.5px;
+          padding: 2px;
+          box-sizing: border-box;
 
-        border: none;
-        background-color: transparent;
-      `
+          width: 26px;
+          height: 26px;
+  
+          border: none;
+          border-radius: 5px;
+          background-color: transparent;
+          background-image: ${v.icon};
+          background-clip: border-box;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: contain;
 
-      const span = document.createElement('span')
+          transition: all ease-in-out 500ms 0;
 
-      span.style.cssText = `
-        width: 24px;
-        height: 24px;
-
-        display: block;
-
-        background-image: ${v.icon};
-      `
-
-      button.appendChild(span)
+          &:hover {
+            background-color: #eee;
+          }
+        }
+      `)
 
       controller.appendChild(button)
     })
@@ -113,15 +135,20 @@ class TextEditor {
     editor.id = `editor-${this.#id}`
     editor.contentEditable = 'true'
 
-    editor.style.margin = '0'
-    editor.style.padding = '10px'
-    editor.style.boxSizing = 'border-box'
-
-    editor.style.width = '100%'
-    editor.style.height = 'auto'
-
-    editor.style.borderTop = '1px solid #ccc'
-    editor.style.outline = 'none'
+    this.#container.contentDocument?.styleSheets.item(0)?.insertRule(`
+      #editor-${this.#id} {
+        margin: 0;
+        padding: 10px;
+        box-sizing: border-box;
+  
+        width: 100%;
+        height: auto;
+  
+        border: 1px solid #ccc;
+        background-color: transparent;
+        outline: none;
+      }
+    `)
 
     this.#container.contentDocument!.body.appendChild(editor)
 
