@@ -40,7 +40,9 @@ class TextEditor {
     },
   ]
 
-  readonly #id: number
+  readonly isEditor: boolean
+
+  readonly id: number
 
   readonly #app: HTMLElement
 
@@ -51,7 +53,8 @@ class TextEditor {
   readonly #editor: HTMLDivElement
 
   constructor(app: HTMLElement) {
-    this.#id = ++TextEditor.#editor_id
+    this.isEditor = true
+    this.id = ++TextEditor.#editor_id
     this.#app = app
 
     this.#container = this.#createContainer()
@@ -62,7 +65,7 @@ class TextEditor {
   #createContainer() {
     const container = document.createElement('iframe')
 
-    container.id = `container-${this.#id}`
+    container.id = `container-${this.id}`
 
     container.style.margin = '0'
     container.style.padding = '0'
@@ -79,7 +82,7 @@ class TextEditor {
 
     const style = document.createElement('style')
 
-    style.id = `container-style-${this.#id}`
+    style.id = `container-style-${this.id}`
 
     container.contentDocument?.head.appendChild(style)
 
@@ -93,12 +96,12 @@ class TextEditor {
   #createController() {
     const controller = document.createElement('div')
 
-    controller.id = `controller-${this.#id}`
+    controller.id = `controller-${this.id}`
 
     controller.addEventListener('click', this.#handleControl.bind(this))
 
     this.#container.contentDocument?.styleSheets.item(0)?.insertRule(`
-      #controller-${this.#id} {
+      #controller-${this.id} {
         margin: 0;
         padding: 5px 2.5px;
         box-sizing: border-box;
@@ -160,11 +163,11 @@ class TextEditor {
   #createEditor() {
     const editor = document.createElement('div')
 
-    editor.id = `editor-${this.#id}`
+    editor.id = `editor-${this.id}`
     editor.contentEditable = 'true'
 
     this.#container.contentDocument?.styleSheets.item(0)?.insertRule(`
-      #editor-${this.#id} {
+      #editor-${this.id} {
         margin: 0;
         padding: 10px;
         box-sizing: border-box;
