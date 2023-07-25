@@ -76,7 +76,7 @@ class TextEditor {
         box-sizing: border-box;
   
         width: 100%;
-        height: auto;
+        height: 37px;
   
         display: flex;
         justify-content: flex-start;
@@ -142,11 +142,27 @@ class TextEditor {
         box-sizing: border-box;
   
         width: 100%;
-        height: auto;
+        height: calc(100% - 37px);
   
         border: 1px solid #ccc;
         background-color: transparent;
         outline: none;
+
+        overflow: hidden auto;
+
+        &::-webkit-scrollbar {
+          width: 5px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background-color: #ccc;
+          border-radius: 2.5px;
+          cursor: pointer;
+        }
+
+        &::-webkit-scrollbar-track {
+          background-color: #eee;
+        }
       }
     `)
 
