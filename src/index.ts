@@ -28,6 +28,16 @@ class TextEditor {
       icon: `url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M12.15 20q-1.625 0-2.925-.813t-2.1-2.287q-.225-.425-.05-.9t.675-.675q.425-.2.863-.025t.712.625q.45.75 1.188 1.213t1.687.462q1.05 0 1.9-.5t.85-1.6q0-.45-.175-.825T14.3 14h2.8q.125.35.188.713t.062.787q0 2.15-1.538 3.325T12.15 20ZM3 12q-.425 0-.713-.288T2 11q0-.425.288-.713T3 10h18q.425 0 .713.288T22 11q0 .425-.288.713T21 12H3Zm4.25-4q.05-1.725 1.363-2.938T12.05 3.85q1.35 0 2.425.537t1.8 1.663q.275.425.1.9t-.675.7q-.375.175-.812.038t-.788-.563q-.325-.375-.825-.625T12.1 6.25q-1.025 0-1.7.463T9.65 8h-2.4Z"%2F%3E%3C%2Fsvg%3E')`,
       cmd: 'strikeThrough',
     },
+    {
+      name: 'material-symbols:superscript-rounded',
+      icon: `url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M20 9q-.425 0-.713-.288T19 8V7q0-.425.288-.713T20 6h2V5h-2.5q-.2 0-.35-.15T19 4.5q0-.2.15-.35T19.5 4H22q.425 0 .713.288T23 5v1q0 .425-.288.713T22 7h-2v1h2.5q.2 0 .35.15t.15.35q0 .2-.15.35T22.5 9H20ZM7.925 20q-.675 0-.987-.575t.037-1.15l3.525-5.55l-3.2-5q-.35-.575-.038-1.15T8.226 6q.3 0 .55.138t.4.387L11.95 11h.1l2.75-4.475q.15-.275.363-.4T15.75 6q.675 0 .975.575t-.05 1.15l-3.2 5l3.55 5.525q.35.575.025 1.163t-.975.587q-.3 0-.55-.138t-.4-.387l-3.075-4.9h-.1l-3.075 4.9q-.175.275-.375.4T7.925 20Z"%2F%3E%3C%2Fsvg%3E')`,
+      cmd: 'superscript',
+    },
+    {
+      name: 'material-symbols:subscript-rounded',
+      icon: `url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M20 20q-.425 0-.713-.288T19 19v-1q0-.425.288-.713T20 17h2v-1h-2.5q-.2 0-.35-.15T19 15.5q0-.2.15-.35t.35-.15H22q.425 0 .713.288T23 16v1q0 .425-.288.713T22 18h-2v1h2.5q.2 0 .35.15t.15.35q0 .2-.15.35t-.35.15H20Zm-9.5-9.275l-3.2-5q-.35-.575-.037-1.15T8.225 4q.3 0 .55.138t.4.387L11.95 9h.1l2.75-4.475q.15-.275.4-.4T15.75 4q.675 0 .975.575t-.05 1.15l-3.2 5l3.55 5.525q.35.575.025 1.163t-.975.587q-.3 0-.55-.138t-.4-.387l-3.075-4.9h-.1l-3.075 4.9q-.175.275-.413.4T7.926 18q-.675 0-.987-.575t.037-1.15l3.525-5.55Z"%2F%3E%3C%2Fsvg%3E')`,
+      cmd: 'subscript',
+    },
   ]
 
   readonly #id: number
@@ -204,6 +214,12 @@ class TextEditor {
           break
         case 'strikeThrough':
           this.#container.contentDocument!.execCommand('strikeThrough')
+          break
+        case 'superscript':
+          this.#container.contentDocument!.execCommand('superscript')
+          break
+        case 'subscript':
+          this.#container.contentDocument!.execCommand('subscript')
           break
       }
     }
