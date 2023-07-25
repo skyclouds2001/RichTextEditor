@@ -69,6 +69,8 @@ class TextEditor {
 
     controller.id = `controller-${this.#id}`
 
+    controller.addEventListener('click', this.#handleControl.bind(this))
+
     this.#container.contentDocument?.styleSheets.item(0)?.insertRule(`
       #controller-${this.#id} {
         margin: 0;
@@ -169,5 +171,19 @@ class TextEditor {
     this.#container.contentDocument!.body.appendChild(editor)
 
     return editor
+  }
+
+  #handleControl(e: MouseEvent) {
+    if (e.target instanceof HTMLButtonElement) {
+      const { cmd } = e.target.dataset
+      switch (cmd) {
+        case 'bold':
+          this.#container.contentDocument!.execCommand('bold')
+          break
+        case 'italic':
+          this.#container.contentDocument!.execCommand('italic')
+          break
+      }
+    }
   }
 }
