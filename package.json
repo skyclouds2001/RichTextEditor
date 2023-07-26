@@ -1,0 +1,41 @@
+{
+  "name": "sky-admin",
+  "private": true,
+  "version": "0.0.0",
+  "license": "MIT",
+  "description": "A rich text editor built on canvas or dom.",
+  "keywords": [
+    "richtext",
+    "editor",
+    "canvas",
+    "contenteditable",
+    "skyclouds2001"
+  ],
+  "homepage": "https://github.com/skyclouds2001/RichTextEditor#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skyclouds2001/RichTextEditor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/skyclouds2001/RichTextEditor/issues",
+    "email": "skyclouds2001@163.com"
+  },
+  "author": {
+    "name": "skyclouds2001",
+    "email": "skyclouds2001@163.com",
+    "url": "https://skyclouds2001.github.io"
+  },
+  "contributors": [
+    "skyclouds2001"
+  ],
+  "packageManager": "pnpm@8.4.0",
+  "engines": {
+    "node": ">=18.13.0",
+    "npm": ">=9.6.0",
+    "yarn": ">=1.22.0",
+    "pnpm": ">=8.4.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.1.6"
+  }
+}
