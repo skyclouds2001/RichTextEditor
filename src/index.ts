@@ -165,6 +165,13 @@ class TextEditor {
     container.contentDocument!.body.style.padding = '0'
     container.contentDocument!.body.style.boxSizing = 'border-box'
 
+    container.contentDocument!.execCommand('enableAbsolutePositionEditor')
+    container.contentDocument!.execCommand('enableInlineTableEditing')
+    container.contentDocument!.execCommand('enableObjectResizing')
+    container.contentDocument!.execCommand('insertBrOnReturn', false, 'true')
+    container.contentDocument!.execCommand('styleWithCSS', false, 'true')
+    container.contentDocument!.execCommand('AutoUrlDetect', false, 'false')
+
     return container
   }
 
