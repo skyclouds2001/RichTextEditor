@@ -94,6 +94,16 @@ class TextEditor {
       cmd: 'insertOrderedList',
     },
     {
+      name: 'material-symbols:format-indent-increase-rounded',
+      icon: `url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M4 21q-.425 0-.713-.288T3 20q0-.425.288-.713T4 19h16q.425 0 .713.288T21 20q0 .425-.288.713T20 21H4Zm8-4q-.425 0-.713-.288T11 16q0-.425.288-.713T12 15h8q.425 0 .713.288T21 16q0 .425-.288.713T20 17h-8Zm0-4q-.425 0-.713-.288T11 12q0-.425.288-.713T12 11h8q.425 0 .713.288T21 12q0 .425-.288.713T20 13h-8Zm0-4q-.425 0-.713-.288T11 8q0-.425.288-.713T12 7h8q.425 0 .713.288T21 8q0 .425-.288.713T20 9h-8ZM4 5q-.425 0-.713-.288T3 4q0-.425.288-.713T4 3h16q.425 0 .713.288T21 4q0 .425-.288.713T20 5H4Zm-.15 10.15q-.25.25-.55.125T3 14.8V9.2q0-.35.3-.475t.55.125l2.8 2.8q.15.15.15.35t-.15.35l-2.8 2.8Z"%2F%3E%3C%2Fsvg%3E')`,
+      cmd: 'indent',
+    },
+    {
+      name: 'material-symbols:format-indent-decrease-rounded',
+      icon: `url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M4 21q-.425 0-.713-.288T3 20q0-.425.288-.713T4 19h16q.425 0 .713.288T21 20q0 .425-.288.713T20 21H4Zm8-4q-.425 0-.713-.288T11 16q0-.425.288-.713T12 15h8q.425 0 .713.288T21 16q0 .425-.288.713T20 17h-8Zm0-4q-.425 0-.713-.288T11 12q0-.425.288-.713T12 11h8q.425 0 .713.288T21 12q0 .425-.288.713T20 13h-8Zm0-4q-.425 0-.713-.288T11 8q0-.425.288-.713T12 7h8q.425 0 .713.288T21 8q0 .425-.288.713T20 9h-8ZM4 5q-.425 0-.713-.288T3 4q0-.425.288-.713T4 3h16q.425 0 .713.288T21 4q0 .425-.288.713T20 5H4Zm2.15 10.15l-2.8-2.8Q3.2 12.2 3.2 12t.15-.35l2.8-2.8q.25-.25.55-.125T7 9.2v5.6q0 .35-.3.475t-.55-.125Z"%2F%3E%3C%2Fsvg%3E')`,
+      cmd: 'outdent',
+    },
+    {
       name: 'material-symbols:link-rounded',
       icon: `url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M7 17q-2.075 0-3.538-1.463T2 12q0-2.075 1.463-3.538T7 7h3q.425 0 .713.288T11 8q0 .425-.288.713T10 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h3q.425 0 .713.288T11 16q0 .425-.288.713T10 17H7Zm2-4q-.425 0-.713-.288T8 12q0-.425.288-.713T9 11h6q.425 0 .713.288T16 12q0 .425-.288.713T15 13H9Zm5 4q-.425 0-.713-.288T13 16q0-.425.288-.713T14 15h3q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-3q-.425 0-.713-.288T13 8q0-.425.288-.713T14 7h3q2.075 0 3.538 1.463T22 12q0 2.075-1.463 3.538T17 17h-3Z"%2F%3E%3C%2Fsvg%3E')`,
       cmd: 'createLink',
@@ -341,6 +351,12 @@ class TextEditor {
           break
         case 'insertUnorderedList':
           this.#container.contentDocument!.execCommand('insertUnorderedList')
+          break
+        case 'indent':
+          this.#container.contentDocument!.execCommand('indent')
+          break
+        case 'outdent':
+          this.#container.contentDocument!.execCommand('outdent')
           break
         case 'createLink':
           const link = window.prompt('Please input the link')
