@@ -9,6 +9,11 @@ class TextEditor {
 
   static readonly controllers: Controller[] = [
     {
+      name: 'material-symbols:format-clear-rounded',
+      icon: `url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="m13.2 10.35l-2.325-2.325L7.85 5H18.5q.625 0 1.063.438T20 6.5q0 .625-.438 1.063T18.5 8h-4.3l-1 2.35Zm5.9 11.55l-7.6-7.6l-1.6 3.775q-.175.425-.563.675T8.5 19q-.8 0-1.25-.675T7.125 16.9L9.2 12L2.1 4.9q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275l17 17q.275.275.275.7t-.275.7q-.275.275-.7.275t-.7-.275Z"%2F%3E%3C%2Fsvg%3E')`,
+      cmd: 'removeFormat',
+    },
+    {
       name: 'material-symbols:undo-rounded',
       icon: `url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M8 19q-.425 0-.713-.288T7 18q0-.425.288-.713T8 17h6.1q1.575 0 2.738-1T18 13.5q0-1.5-1.163-2.5T14.1 10H7.8l1.9 1.9q.275.275.275.7t-.275.7q-.275.275-.7.275t-.7-.275L4.7 9.7q-.15-.15-.213-.325T4.425 9q0-.2.063-.375T4.7 8.3l3.6-3.6q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7L7.8 8h6.3q2.425 0 4.163 1.575T20 13.5q0 2.35-1.738 3.925T14.1 19H8Z"%2F%3E%3C%2Fsvg%3E')`,
       cmd: 'undo',
@@ -256,6 +261,9 @@ class TextEditor {
     if (e.target instanceof HTMLButtonElement) {
       const { cmd } = e.target.dataset
       switch (cmd) {
+        case 'removeFormat':
+          this.#container.contentDocument!.execCommand('removeFormat')
+          break
         case 'undo':
           this.#container.contentDocument!.execCommand('undo')
           break
