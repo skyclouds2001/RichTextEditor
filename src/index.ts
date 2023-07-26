@@ -128,6 +128,9 @@ class TextEditor {
 
     controller.id = `controller-${this.id}`
 
+    controller.role = 'toolbar'
+    controller.ariaOrientation = 'horizontal'
+
     controller.addEventListener('click', this.#handleControl.bind(this))
 
     this.#container.contentDocument?.styleSheets.item(0)?.insertRule(`
@@ -152,6 +155,9 @@ class TextEditor {
       const button = document.createElement('button')
 
       button.id = `controller-button-${v.cmd}`
+      button.tabIndex = 0
+
+      button.ariaLabel = v.cmd
 
       button.setAttribute('data-icon', v.name)
       button.setAttribute('data-cmd', v.cmd)
@@ -194,7 +200,21 @@ class TextEditor {
     const editor = document.createElement('div')
 
     editor.id = `editor-${this.id}`
+    editor.autocapitalize = 'none'
+    editor.autofocus = true
     editor.contentEditable = 'true'
+    editor.dir = 'ltr'
+    editor.enterKeyHint = 'enter'
+    editor.inputMode = 'text'
+    editor.spellcheck = false
+    editor.tabIndex = 0
+
+    editor.role = 'textbox'
+    editor.ariaAutoComplete = 'none'
+    editor.ariaMultiLine = 'true'
+    editor.ariaPlaceholder = 'edit richtext'
+    editor.ariaReadOnly = 'false'
+    editor.ariaRequired = 'false'
 
     this.#container.contentDocument?.styleSheets.item(0)?.insertRule(`
       #editor-${this.id} {
