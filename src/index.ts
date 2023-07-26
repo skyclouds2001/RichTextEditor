@@ -54,6 +54,11 @@ class TextEditor {
       cmd: 'subscript',
     },
     {
+      name: 'material-symbols:format-paragraph-rounded',
+      icon: `url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M10 20q-.425 0-.713-.288T9 19v-5q-2.075 0-3.538-1.463T4 9q0-2.075 1.463-3.538T9 4h8q.425 0 .713.288T18 5q0 .425-.288.713T17 6h-1v13q0 .425-.288.713T15 20q-.425 0-.713-.288T14 19V6h-3v13q0 .425-.288.713T10 20Z"%2F%3E%3C%2Fsvg%3E')`,
+      cmd: 'insertParagraph',
+    },
+    {
       name: 'material-symbols:format-h1-rounded',
       icon: `url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M6 17q-.425 0-.713-.288T5 16V8q0-.425.288-.713T6 7q.425 0 .713.288T7 8v3h4V8q0-.425.288-.713T12 7q.425 0 .713.288T13 8v8q0 .425-.288.713T12 17q-.425 0-.713-.288T11 16v-3H7v3q0 .425-.288.713T6 17Zm12 0q-.425 0-.713-.288T17 16V9h-1q-.425 0-.713-.288T15 8q0-.425.288-.713T16 7h2q.425 0 .713.288T19 8v8q0 .425-.288.713T18 17Z"%2F%3E%3C%2Fsvg%3E')`,
       cmd: 'heading-1',
@@ -334,6 +339,9 @@ class TextEditor {
           break
         case 'subscript':
           this.#container.contentDocument!.execCommand('subscript')
+          break
+        case 'insertParagraph':
+          this.#container.contentDocument!.execCommand('insertParagraph')
           break
         case 'heading-1':
           this.#container.contentDocument!.execCommand('formatBlock', false, 'H1')
