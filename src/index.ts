@@ -54,6 +54,36 @@ class TextEditor {
       cmd: 'subscript',
     },
     {
+      name: 'material-symbols:format-h1-rounded',
+      icon: `url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M6 17q-.425 0-.713-.288T5 16V8q0-.425.288-.713T6 7q.425 0 .713.288T7 8v3h4V8q0-.425.288-.713T12 7q.425 0 .713.288T13 8v8q0 .425-.288.713T12 17q-.425 0-.713-.288T11 16v-3H7v3q0 .425-.288.713T6 17Zm12 0q-.425 0-.713-.288T17 16V9h-1q-.425 0-.713-.288T15 8q0-.425.288-.713T16 7h2q.425 0 .713.288T19 8v8q0 .425-.288.713T18 17Z"%2F%3E%3C%2Fsvg%3E')`,
+      cmd: 'heading-1',
+    },
+    {
+      name: 'material-symbols:format-h2-rounded',
+      icon: `url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M4 17q-.425 0-.713-.288T3 16V8q0-.425.288-.713T4 7q.425 0 .713.288T5 8v3h4V8q0-.425.288-.713T10 7q.425 0 .713.288T11 8v8q0 .425-.288.713T10 17q-.425 0-.713-.288T9 16v-3H5v3q0 .425-.288.713T4 17Zm10 0q-.425 0-.713-.288T13 16v-3q0-.825.588-1.413T15 11h4V9h-5q-.425 0-.713-.288T13 8q0-.425.288-.713T14 7h5q.825 0 1.413.588T21 9v2q0 .825-.588 1.413T19 13h-4v2h5q.425 0 .713.288T21 16q0 .425-.288.713T20 17h-6Z"%2F%3E%3C%2Fsvg%3E')`,
+      cmd: 'heading-2',
+    },
+    {
+      name: 'material-symbols:format-h3-rounded',
+      icon: `url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M4 17q-.425 0-.713-.288T3 16V8q0-.425.288-.713T4 7q.425 0 .713.288T5 8v3h4V8q0-.425.288-.713T10 7q.425 0 .713.288T11 8v8q0 .425-.288.713T10 17q-.425 0-.713-.288T9 16v-3H5v3q0 .425-.288.713T4 17Zm10 0q-.425 0-.713-.288T13 16q0-.425.288-.713T14 15h5v-2h-3q-.425 0-.713-.288T15 12q0-.425.288-.713T16 11h3V9h-5q-.425 0-.713-.288T13 8q0-.425.288-.713T14 7h5q.825 0 1.413.588T21 9v6q0 .825-.588 1.413T19 17h-5Z"%2F%3E%3C%2Fsvg%3E')`,
+      cmd: 'heading-3',
+    },
+    {
+      name: 'material-symbols:format-h4-rounded',
+      icon: `url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M3.5 17q-.425 0-.713-.288T2.5 16V8q0-.425.288-.713T3.5 7q.425 0 .713.288T4.5 8v3h4V8q0-.425.288-.713T9.5 7q.425 0 .713.288T10.5 8v8q0 .425-.288.713T9.5 17q-.425 0-.713-.288T8.5 16v-3h-4v3q0 .425-.288.713T3.5 17Zm15 0q-.425 0-.713-.288T17.5 16v-2h-4q-.425 0-.713-.288T12.5 13V8q0-.425.288-.713T13.5 7q.425 0 .713.288T14.5 8v4h3V8q0-.425.288-.713T18.5 7q.425 0 .713.288T19.5 8v4h1q.425 0 .713.288T21.5 13q0 .425-.288.713T20.5 14h-1v2q0 .425-.288.713T18.5 17Z"%2F%3E%3C%2Fsvg%3E')`,
+      cmd: 'heading-4',
+    },
+    {
+      name: 'material-symbols:format-h5-rounded',
+      icon: `url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M4 17q-.425 0-.713-.288T3 16V8q0-.425.288-.713T4 7q.425 0 .713.288T5 8v3h4V8q0-.425.288-.713T10 7q.425 0 .713.288T11 8v8q0 .425-.288.713T10 17q-.425 0-.713-.288T9 16v-3H5v3q0 .425-.288.713T4 17Zm10 0q-.425 0-.713-.288T13 16q0-.425.288-.713T14 15h5v-2h-5q-.425 0-.713-.288T13 12V8q0-.425.288-.713T14 7h6q.425 0 .713.288T21 8q0 .425-.288.713T20 9h-5v2h4q.825 0 1.413.588T21 13v2q0 .825-.588 1.413T19 17h-5Z"%2F%3E%3C%2Fsvg%3E')`,
+      cmd: 'heading-5',
+    },
+    {
+      name: 'material-symbols:format-h6-rounded',
+      icon: `url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M4 17q-.425 0-.713-.288T3 16V8q0-.425.288-.713T4 7q.425 0 .713.288T5 8v3h4V8q0-.425.288-.713T10 7q.425 0 .713.288T11 8v8q0 .425-.288.713T10 17q-.425 0-.713-.288T9 16v-3H5v3q0 .425-.288.713T4 17Zm11 0q-.825 0-1.413-.588T13 15V9q0-.825.588-1.413T15 7h5q.425 0 .713.288T21 8q0 .425-.288.713T20 9h-5v2h4q.825 0 1.413.588T21 13v2q0 .825-.588 1.413T19 17h-4Zm0-4v2h4v-2h-4Z"%2F%3E%3C%2Fsvg%3E')`,
+      cmd: 'heading-6',
+    },
+    {
       name: 'material-symbols:format-list-bulleted-rounded',
       icon: `url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M10 19q-.425 0-.713-.288T9 18q0-.425.288-.713T10 17h10q.425 0 .713.288T21 18q0 .425-.288.713T20 19H10Zm0-6q-.425 0-.713-.288T9 12q0-.425.288-.713T10 11h10q.425 0 .713.288T21 12q0 .425-.288.713T20 13H10Zm0-6q-.425 0-.713-.288T9 6q0-.425.288-.713T10 5h10q.425 0 .713.288T21 6q0 .425-.288.713T20 7H10ZM5 20q-.825 0-1.413-.588T3 18q0-.825.588-1.413T5 16q.825 0 1.413.588T7 18q0 .825-.588 1.413T5 20Zm0-6q-.825 0-1.413-.588T3 12q0-.825.588-1.413T5 10q.825 0 1.413.588T7 12q0 .825-.588 1.413T5 14Zm0-6q-.825 0-1.413-.588T3 6q0-.825.588-1.413T5 4q.825 0 1.413.588T7 6q0 .825-.588 1.413T5 8Z"%2F%3E%3C%2Fsvg%3E')`,
       cmd: 'insertUnorderedList',
@@ -287,6 +317,24 @@ class TextEditor {
           break
         case 'subscript':
           this.#container.contentDocument!.execCommand('subscript')
+          break
+        case 'heading-1':
+          this.#container.contentDocument!.execCommand('formatBlock', false, 'H1')
+          break
+        case 'heading-2':
+          this.#container.contentDocument!.execCommand('formatBlock', false, 'H2')
+          break
+        case 'heading-3':
+          this.#container.contentDocument!.execCommand('formatBlock', false, 'H3')
+          break
+        case 'heading-4':
+          this.#container.contentDocument!.execCommand('formatBlock', false, 'H4')
+          break
+        case 'heading-5':
+          this.#container.contentDocument!.execCommand('formatBlock', false, 'H5')
+          break
+        case 'heading-6':
+          this.#container.contentDocument!.execCommand('formatBlock', false, 'H6')
           break
         case 'insertOrderedList':
           this.#container.contentDocument!.execCommand('insertOrderedList')
