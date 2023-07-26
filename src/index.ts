@@ -48,6 +48,16 @@ class TextEditor {
       icon: `url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M20 20q-.425 0-.713-.288T19 19v-1q0-.425.288-.713T20 17h2v-1h-2.5q-.2 0-.35-.15T19 15.5q0-.2.15-.35t.35-.15H22q.425 0 .713.288T23 16v1q0 .425-.288.713T22 18h-2v1h2.5q.2 0 .35.15t.15.35q0 .2-.15.35t-.35.15H20Zm-9.5-9.275l-3.2-5q-.35-.575-.037-1.15T8.225 4q.3 0 .55.138t.4.387L11.95 9h.1l2.75-4.475q.15-.275.4-.4T15.75 4q.675 0 .975.575t-.05 1.15l-3.2 5l3.55 5.525q.35.575.025 1.163t-.975.587q-.3 0-.55-.138t-.4-.387l-3.075-4.9h-.1l-3.075 4.9q-.175.275-.413.4T7.926 18q-.675 0-.987-.575t.037-1.15l3.525-5.55Z"%2F%3E%3C%2Fsvg%3E')`,
       cmd: 'subscript',
     },
+    {
+      name: 'material-symbols:link-rounded',
+      icon: `url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M7 17q-2.075 0-3.538-1.463T2 12q0-2.075 1.463-3.538T7 7h3q.425 0 .713.288T11 8q0 .425-.288.713T10 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h3q.425 0 .713.288T11 16q0 .425-.288.713T10 17H7Zm2-4q-.425 0-.713-.288T8 12q0-.425.288-.713T9 11h6q.425 0 .713.288T16 12q0 .425-.288.713T15 13H9Zm5 4q-.425 0-.713-.288T13 16q0-.425.288-.713T14 15h3q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-3q-.425 0-.713-.288T13 8q0-.425.288-.713T14 7h3q2.075 0 3.538 1.463T22 12q0 2.075-1.463 3.538T17 17h-3Z"%2F%3E%3C%2Fsvg%3E')`,
+      cmd: 'createLink',
+    },
+    {
+      name: 'material-symbols:link-off-rounded',
+      icon: `url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="m19.25 16.45l-1.5-1.55q1-.275 1.625-1.063T20 12q0-1.25-.875-2.125T17 9h-3q-.425 0-.713-.288T13 8q0-.425.288-.713T14 7h3q2.075 0 3.538 1.463T22 12q0 1.425-.738 2.625T19.25 16.45Zm-3.625-3.675L13.85 11H15q.425 0 .713.288T16 12q0 .25-.1.45t-.275.325ZM20.5 21.9q-.275.275-.7.275t-.7-.275l-17-17q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275l17 17q.275.275.275.7t-.275.7ZM7 17q-2.075 0-3.538-1.463T2 12q0-1.725 1.05-3.075t2.7-1.775L7.6 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h3q.425 0 .713.288T11 16q0 .425-.288.713T10 17H7Zm2-4q-.425 0-.713-.288T8 12q0-.425.288-.713T9 11h.625l1.975 2H9Z"%2F%3E%3C%2Fsvg%3E')`,
+      cmd: 'unlink',
+    },
   ]
 
   readonly isEditor: boolean
@@ -239,6 +249,14 @@ class TextEditor {
           break
         case 'subscript':
           this.#container.contentDocument!.execCommand('subscript')
+          break
+        case 'createLink':
+          const link = window.prompt('Please input the link')
+          if (!link) return
+          this.#container.contentDocument!.execCommand('createLink', false, link)
+          break
+        case 'unlink':
+          this.#container.contentDocument!.execCommand('unlink')
           break
       }
     }
