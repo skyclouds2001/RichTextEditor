@@ -296,8 +296,7 @@ class TextEditor {
           break
         case 'createLink':
           const link = window.prompt('Please input the link')
-          if (!link) return
-          this.#container.contentDocument!.execCommand('createLink', false, link)
+          if (typeof link === 'string') this.#container.contentDocument!.execCommand('createLink', false, link)
           break
         case 'unlink':
           this.#container.contentDocument!.execCommand('unlink')
