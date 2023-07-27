@@ -179,6 +179,7 @@ class TextEditor {
     container.contentDocument!.execCommand('enableInlineTableEditing')
     container.contentDocument!.execCommand('enableObjectResizing')
     container.contentDocument!.execCommand('insertBrOnReturn', false, 'true')
+    container.contentDocument!.execCommand('useCSS', false, 'false')
     container.contentDocument!.execCommand('styleWithCSS', false, 'true')
     container.contentDocument!.execCommand('AutoUrlDetect', false, 'false')
 
