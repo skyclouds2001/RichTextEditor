@@ -89,6 +89,11 @@ class TextEditor {
       cmd: 'heading-6',
     },
     {
+      name: 'material-symbols:format-quote-rounded',
+      icon: `url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M17.175 17q-.75 0-1.15-.638t-.05-1.312L17 13h-2q-.825 0-1.413-.588T13 11V8q0-.825.588-1.413T15 6h3q.825 0 1.413.588T20 8v4.525q0 .225-.038.463t-.162.437l-1.425 2.825q-.175.35-.5.55t-.7.2Zm-9 0q-.75 0-1.15-.638t-.05-1.312L8 13H6q-.825 0-1.413-.588T4 11V8q0-.825.588-1.413T6 6h3q.825 0 1.413.588T11 8v4.525q0 .225-.038.463t-.162.437L9.375 16.25q-.175.35-.5.55t-.7.2Z"%2F%3E%3C%2Fsvg%3E')`,
+      cmd: 'quote',
+    },
+    {
       name: 'material-symbols:format-list-bulleted-rounded',
       icon: `url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M10 19q-.425 0-.713-.288T9 18q0-.425.288-.713T10 17h10q.425 0 .713.288T21 18q0 .425-.288.713T20 19H10Zm0-6q-.425 0-.713-.288T9 12q0-.425.288-.713T10 11h10q.425 0 .713.288T21 12q0 .425-.288.713T20 13H10Zm0-6q-.425 0-.713-.288T9 6q0-.425.288-.713T10 5h10q.425 0 .713.288T21 6q0 .425-.288.713T20 7H10ZM5 20q-.825 0-1.413-.588T3 18q0-.825.588-1.413T5 16q.825 0 1.413.588T7 18q0 .825-.588 1.413T5 20Zm0-6q-.825 0-1.413-.588T3 12q0-.825.588-1.413T5 10q.825 0 1.413.588T7 12q0 .825-.588 1.413T5 14Zm0-6q-.825 0-1.413-.588T3 6q0-.825.588-1.413T5 4q.825 0 1.413.588T7 6q0 .825-.588 1.413T5 8Z"%2F%3E%3C%2Fsvg%3E')`,
       cmd: 'insertUnorderedList',
@@ -371,6 +376,9 @@ class TextEditor {
           break
         case 'heading-6':
           this.#container.contentDocument!.execCommand('formatBlock', false, 'H6')
+          break
+        case 'quote':
+          this.#container.contentDocument!.execCommand('formatBlock', false, 'BLOCKQUOTE')
           break
         case 'insertOrderedList':
           this.#container.contentDocument!.execCommand('insertOrderedList')
