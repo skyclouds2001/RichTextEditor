@@ -119,6 +119,11 @@ class TextEditor {
       cmd: 'unlink',
     },
     {
+      name: 'material-symbols:horizontal-rule-rounded',
+      icon: `url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M5 13q-.425 0-.713-.288T4 12q0-.425.288-.713T5 11h14q.425 0 .713.288T20 12q0 .425-.288.713T19 13H5Z"%2F%3E%3C%2Fsvg%3E')`,
+      cmd: 'insertHorizontalRule',
+    },
+    {
       name: 'material-symbols:imagesmode-outline-rounded',
       icon: `url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M5 21q-.825 0-1.413-.588T3 19V5q0-.825.588-1.413T5 3h14q.825 0 1.413.588T21 5v14q0 .825-.588 1.413T19 21H5Zm0-2h14V5H5v14Zm0 0V5v14Zm2-2h10q.3 0 .45-.275t-.05-.525l-2.75-3.675q-.15-.2-.4-.2t-.4.2L11.25 16L9.4 13.525q-.15-.2-.4-.2t-.4.2l-2 2.675q-.2.25-.05.525T7 17Zm1.5-7q.625 0 1.063-.438T10 8.5q0-.625-.438-1.063T8.5 7q-.625 0-1.063.438T7 8.5q0 .625.438 1.063T8.5 10Z"%2F%3E%3C%2Fsvg%3E')`,
       cmd: 'insertImage',
@@ -385,6 +390,9 @@ class TextEditor {
           break
         case 'unlink':
           this.#container.contentDocument!.execCommand('unlink')
+          break
+        case 'insertHorizontalRule':
+          this.#container.contentDocument!.execCommand('insertHorizontalRule')
           break
         case 'insertImage':
           const image = window.prompt('Please input the source of image')
